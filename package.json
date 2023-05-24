@@ -1,0 +1,29 @@
+{
+  "name": "figma-to-morfeo",
+  "version": "1.0.0",
+  "description": "Display, edit and export a Morfeo-ready theme",
+  "license": "ISC",
+  "author": "gabrieleAngius <gabrieleangius@protonmail.com>",
+  "scripts": {
+    "dev": "yarn build --watch",
+    "build": "esbuild widget-src/widget.tsx --bundle --outfile=dist/widget.js --target=es6",
+    "compile": "tsc --noEmit",
+    "test": "jest",
+    "test:ci": "yarn test --coverage"
+  },
+  "devDependencies": {
+    "@figma/plugin-typings": "*",
+    "@figma/widget-typings": "*",
+    "@types/jest": "^29.5.1",
+    "jest-environment-jsdom": "^29.5.0",
+    "ts-jest": "^29.1.0",
+    "esbuild": "*",
+    "jest": "^29.5.0",
+    "typescript": "*"
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
+  }
+}

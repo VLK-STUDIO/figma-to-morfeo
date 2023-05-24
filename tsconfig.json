@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "jsx": "react",
+    "jsxFactory": "figma.widget.h",
+    "jsxFragmentFactory": "figma.widget.Fragment",
+    "strict": true,
+    "typeRoots": ["./node_modules/@types", "./node_modules/@figma"],
+    "noUnusedParameters": true,
+    "noUnusedLocals": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "removeComments": true,
+    "moduleResolution": "node",
+    "skipLibCheck": true
+  },
+  "exclude": ["node_modules"]
+}

@@ -1,0 +1,14 @@
+{
+  "name": "Figma to Morfeo",
+  "id": "1241294062331357717",
+  "api": "1.0.0",
+  "main": "dist/widget.js",
+  "capabilities": [],
+  "enableProposedApi": false,
+  "editorType": ["figma", "figjam"],
+  "containsWidget": true,
+  "widgetApi": "1.0.0",
+  "networkAccess": {
+    "allowedDomains": ["none"]
+  }
+}
