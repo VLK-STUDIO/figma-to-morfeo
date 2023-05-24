@@ -1,5 +1,7 @@
 # Figma to Morfeo
 
+[![codecov](https://codecov.io/gh/VLK-STUDIO/figma-to-morfeo/branch/main/graph/badge.svg?token=11WG4YLVDD)](https://codecov.io/gh/VLK-STUDIO/figma-to-morfeo)
+
 ## Description
 
 This widget allow to easily display, edit and export a Morfeo-ready theme on Figma. It generate a default theme at first run, then allow the user to add, delete or edit any slice.
