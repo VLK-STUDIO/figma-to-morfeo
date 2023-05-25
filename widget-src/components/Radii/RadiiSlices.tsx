@@ -1,4 +1,4 @@
-import { SliceItem } from "../../_shared/types";
+import { SliceItem } from "../../types";
 import { AddButton } from "../Buttons/AddButton";
 import { RadiiSlice } from "./RadiiSlice";
 import { addRadiiSlice } from "./utils";

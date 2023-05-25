@@ -1,4 +1,4 @@
-import { SliceItem } from "./_shared/types";
+import { SliceItem } from "./types";
 import { RadiiSlices } from "./components/Radii/RadiiSlices";
 import { useInitTheme } from "./hooks/useInitTheme";
 

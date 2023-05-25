@@ -1,15 +1,15 @@
 import {
-  BoxPropertyName,
   ComponentNames,
   defaultBoxVariants,
-} from "../_shared/constants";
-import { SliceItem } from "../_shared/types";
-import { createBoxInstances } from "../_shared/utils/createBoxInstances";
-import { getCurrentBoxVariants } from "../_shared/utils/getCurrentBoxVariants";
+  BoxPropertyName,
+} from "../constants";
+import { SliceItem } from "../types";
+import { createBoxInstances } from "../utils/createBoxInstances";
+import { getCurrentBoxVariants } from "../utils/getCurrentBoxVariants";
 import {
   GetVariantsParams,
   getVariantCombinations,
-} from "../_shared/utils/getVariantCombinations";
+} from "../utils/getVariantCombinations";
 
 const { widget } = figma;
 const { useEffect } = widget;
