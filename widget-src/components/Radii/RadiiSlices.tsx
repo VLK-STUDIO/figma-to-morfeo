@@ -1,31 +1,13 @@
 import { SliceItem } from "../../_shared/types";
 import { AddButton } from "../Buttons/AddButton";
 import { RadiiSlice } from "./RadiiSlice";
+import { addRadiiSlice } from "./utils";
 
 const { widget } = figma;
 const { Text, Frame, AutoLayout } = widget;
 
 type Props = {
   radiiMap: SyncedMap<SliceItem>;
-};
-
-export const addRadiiSlice = (radiiMap: SyncedMap<SliceItem>) => {
-  const newVariant = figma.createComponent();
-  newVariant.name = "Radius=N";
-  newVariant.cornerRadius = 0;
-  newVariant.fills = [{ type: "SOLID", color: { r: 0, g: 0, b: 0 } }];
-  radiiMap.set(newVariant.id, {
-    id: newVariant.id,
-    name: "N",
-    value: 0,
-    refIds: [newVariant.id],
-  });
-  const boxComponent = figma.root.findOne(
-    (node) => node.type === "COMPONENT_SET" && node.name === "BOX"
-  );
-  if (boxComponent?.type === "COMPONENT_SET") {
-    boxComponent.appendChild(newVariant);
-  }
 };
 
 export const RadiiSlices = ({ radiiMap }: Props) => {
