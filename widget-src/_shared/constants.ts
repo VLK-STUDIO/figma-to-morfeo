@@ -17,3 +17,7 @@ export const defaultBoxVariants: GetVariantsParams = [
     variants: { none: 0, XS: 1, L: 10 },
   },
 ];
+
+export enum ComponentNames {
+  Box = "BOX",
+}

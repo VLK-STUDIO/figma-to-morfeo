@@ -1,4 +1,8 @@
-import { BoxPropertyName, defaultBoxVariants } from "../_shared/constants";
+import {
+  BoxPropertyName,
+  ComponentNames,
+  defaultBoxVariants,
+} from "../_shared/constants";
 import { SliceItem } from "../_shared/types";
 import { createBoxInstances } from "../_shared/utils/createBoxInstances";
 import { getCurrentBoxVariants } from "../_shared/utils/getCurrentBoxVariants";
@@ -13,7 +17,8 @@ const { useEffect } = widget;
 export const useInitTheme = (radiiMap: SyncedMap<SliceItem>) => {
   useEffect(() => {
     const boxComponent = figma.root.findOne(
-      (node) => node.type === "COMPONENT_SET" && node.name === "BOX"
+      (node) =>
+        node.type === "COMPONENT_SET" && node.name === ComponentNames.Box
     );
 
     if (radiiMap.size !== 0) {
@@ -29,7 +34,7 @@ export const useInitTheme = (radiiMap: SyncedMap<SliceItem>) => {
 
       radiiSliceItems = sliceItems[BoxPropertyName.Radius];
       const box = figma.combineAsVariants(instances, figma.currentPage);
-      box.name = "BOX";
+      box.name = ComponentNames.Box;
     }
 
     if (boxComponent && boxComponent.type === "COMPONENT_SET") {

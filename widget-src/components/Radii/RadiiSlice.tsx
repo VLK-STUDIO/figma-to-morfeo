@@ -1,9 +1,7 @@
 import { SliceItem } from "../../_shared/types";
-import {
-  deleteSlice,
-  editSliceName,
-  editSliceValue,
-} from "../../_shared/utils/utils";
+import { deleteSlice } from "../../_shared/utils/deleteSlice";
+import { editSliceName } from "../../_shared/utils/editSliceName";
+import { editSliceValue } from "../../_shared/utils/editSliceValue";
 import { DeleteButton } from "../Buttons/DeleteButton";
 
 const { widget } = figma;
@@ -65,7 +63,14 @@ export const RadiiSlice = ({ radiiMap, ...slice }: Props) => {
           fontWeight={500}
           strokeWidth={0.632}
           value={`${slice.value}`}
-          onTextEditEnd={(e) => editSliceValue({ e, map: radiiMap, slice })}
+          onTextEditEnd={(e) =>
+            editSliceValue({
+              e,
+              map: radiiMap,
+              slice,
+              styleKey: "cornerRadius",
+            })
+          }
         />
       </AutoLayout>
     </AutoLayout>
