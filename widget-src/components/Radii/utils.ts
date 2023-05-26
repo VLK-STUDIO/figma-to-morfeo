@@ -1,8 +1,8 @@
-import { BoxPropertyName, ComponentNames } from "../../_shared/constants";
-import { SliceItem } from "../../_shared/types";
-import { createBoxInstances } from "../../_shared/utils/createBoxInstances";
-import { getVariantCombinations } from "../../_shared/utils/getVariantCombinations";
-import { restoreBoxComponent } from "../../_shared/utils/restoreBoxComponent";
+import { BoxPropertyName, ComponentNames } from "../../constants";
+import { SliceItem } from "../../types";
+import { createBoxInstances } from "../../utils/createBoxInstances";
+import { getVariantCombinations } from "../../utils/getVariantCombinations";
+import { restoreBoxComponent } from "../../utils/restoreBoxComponent";
 
 export const addRadiiSlice = (radiiMap: SyncedMap<SliceItem>) => {
   const boxComponent = figma.root.findOne(

@@ -1,7 +1,7 @@
-import { SliceItem } from "../../_shared/types";
-import { deleteSlice } from "../../_shared/utils/deleteSlice";
-import { editSliceName } from "../../_shared/utils/editSliceName";
-import { editSliceValue } from "../../_shared/utils/editSliceValue";
+import { SliceItem } from "../../types";
+import { deleteSlice } from "../../utils/deleteSlice";
+import { editSliceName } from "../../utils/editSliceName";
+import { editSliceValue } from "../../utils/editSliceValue";
 import { DeleteButton } from "../Buttons/DeleteButton";
 
 const { widget } = figma;

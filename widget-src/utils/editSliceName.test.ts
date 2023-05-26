@@ -1,4 +1,4 @@
-import { mockGetNodeById, mockRootFindOne } from "../../../__mocks__/figmaMock";
+import { mockGetNodeById, mockRootFindOne } from "../../__mocks__/figmaMock";
 import { BoxPropertyName } from "../constants";
 import { editSliceName } from "./editSliceName";
 import * as Utils from "./utils";

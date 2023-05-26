@@ -1,4 +1,4 @@
-import { mockGetNodeById, mockRootFindOne } from "../../../__mocks__/figmaMock";
+import { mockGetNodeById, mockRootFindOne } from "../../__mocks__/figmaMock";
 import { editSliceValue } from "./editSliceValue";
 import * as RestoreBoxComponent from "./restoreBoxComponent";
 

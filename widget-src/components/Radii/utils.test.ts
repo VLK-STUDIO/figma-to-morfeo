@@ -2,8 +2,8 @@ import {
   mockCombineAsVariants,
   mockRootFindOne,
 } from "../../../__mocks__/figmaMock";
-import { ComponentNames } from "../../_shared/constants";
-import { SliceItem } from "../../_shared/types";
+import { ComponentNames } from "../../constants";
+import { SliceItem } from "../../types";
 import { addRadiiSlice } from "./utils";
 
 describe("addRadiiSlice", () => {

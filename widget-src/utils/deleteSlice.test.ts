@@ -2,7 +2,7 @@ import {
   mockGetNodeById,
   mockNotify,
   mockRootFindOne,
-} from "../../../__mocks__/figmaMock";
+} from "../../__mocks__/figmaMock";
 import { deleteSlice } from "./deleteSlice";
 import * as RestoreBoxComponent from "./restoreBoxComponent";
 
