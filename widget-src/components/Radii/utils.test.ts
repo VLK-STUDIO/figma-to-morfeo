@@ -1,23 +1,16 @@
-import {
-  mockCombineAsVariants,
-  mockRootFindOne,
-} from "../../../__mocks__/figmaMock";
 import { ComponentNames } from "../../constants";
 import { SliceItem } from "../../types";
 import { addRadiiSlice } from "./utils";
 
 describe("addRadiiSlice", () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
   it("should add new sliceItems on the state and append new instances to the box", () => {
     const mockSet = jest.fn();
     const mockAppendChild = jest.fn();
-    mockRootFindOne.mockReturnValue({
+    jest.spyOn(figma.root, "findOne").mockReturnValue({
       type: "COMPONENT_SET",
       name: ComponentNames.Box,
       appendChild: mockAppendChild,
-    });
+    } as any);
     addRadiiSlice({ set: mockSet } as unknown as SyncedMap<SliceItem>);
 
     expect(mockSet).toBeCalledWith(expect.any(String), {
@@ -38,7 +31,7 @@ describe("addRadiiSlice", () => {
     const mockSet = jest.fn();
     const mockAppendChild = jest.fn();
     const mockMapDelete = jest.fn();
-    mockRootFindOne.mockReturnValue(null);
+    jest.spyOn(figma.root, "findOne").mockReturnValue(null);
     addRadiiSlice({
       set: mockSet,
       values: () => [{ id: "1", name: "S", refIds: ["222"], value: 1 }],
@@ -47,7 +40,7 @@ describe("addRadiiSlice", () => {
     } as unknown as SyncedMap<SliceItem>);
 
     expect(mockAppendChild).not.toBeCalled();
-    expect(mockCombineAsVariants).toBeCalledTimes(1);
+    expect(figma.combineAsVariants).toBeCalledTimes(1);
 
     // reset state
     expect(mockMapDelete).toBeCalledTimes(1);

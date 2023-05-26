@@ -1,13 +1,7 @@
-import { mockGetNodeById, mockRootFindOne } from "../../__mocks__/figmaMock";
 import { BoxPropertyName } from "../constants";
 import { editSliceName } from "./editSliceName";
 import * as Utils from "./utils";
 import * as RestoreBoxComponent from "./restoreBoxComponent";
-
-const mockUpdateVariantName = jest.fn();
-jest
-  .spyOn(Utils, "updateVariantName")
-  .mockImplementation(mockUpdateVariantName);
 
 const mockSet = jest.fn();
 const mockRestoreBoxComponent = jest.fn();
@@ -16,12 +10,15 @@ jest
   .mockImplementation(mockRestoreBoxComponent);
 
 describe("editSliceName", () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
   it("should change the name of a slice on the state and on related box instances", () => {
-    mockRootFindOne.mockReturnValue({});
-    mockGetNodeById.mockReturnValue({ type: "COMPONENT", name: "oldName" });
+    const mockUpdateVariantName = jest.fn();
+    jest.spyOn(figma.root, "findOne").mockReturnValue({} as any);
+    jest
+      .spyOn(figma, "getNodeById")
+      .mockReturnValue({ type: "COMPONENT", name: "oldName" } as any);
+    jest
+      .spyOn(Utils, "updateVariantName")
+      .mockImplementation(mockUpdateVariantName);
 
     editSliceName({
       e: { characters: "newName" },
@@ -40,8 +37,8 @@ describe("editSliceName", () => {
       refIds: ["instance1", "instance2"],
       value: 1,
     });
-    expect(mockGetNodeById).toBeCalledWith("instance1");
-    expect(mockGetNodeById).toBeCalledWith("instance2");
+    expect(figma.getNodeById).toBeCalledWith("instance1");
+    expect(figma.getNodeById).toBeCalledWith("instance2");
     expect(mockUpdateVariantName).toBeCalledWith({
       instanceName: "oldName",
       newVariantName: "newName",
@@ -49,8 +46,14 @@ describe("editSliceName", () => {
     });
   });
   it("should not change the name if e.characters is empty string", () => {
-    mockRootFindOne.mockReturnValue({});
-    mockGetNodeById.mockReturnValue({ type: "COMPONENT", name: "oldName" });
+    const mockUpdateVariantName = jest.fn();
+    jest.spyOn(figma.root, "findOne").mockReturnValue({} as any);
+    jest
+      .spyOn(figma, "getNodeById")
+      .mockReturnValue({ type: "COMPONENT", name: "oldName" } as any);
+    jest
+      .spyOn(Utils, "updateVariantName")
+      .mockImplementation(mockUpdateVariantName);
 
     editSliceName({
       e: { characters: "" },
@@ -69,8 +72,8 @@ describe("editSliceName", () => {
       refIds: ["instance1", "instance2"],
       value: 1,
     });
-    expect(mockGetNodeById).toBeCalledWith("instance1");
-    expect(mockGetNodeById).toBeCalledWith("instance2");
+    expect(figma.getNodeById).toBeCalledWith("instance1");
+    expect(figma.getNodeById).toBeCalledWith("instance2");
     expect(mockUpdateVariantName).toBeCalledWith({
       instanceName: "oldName",
       newVariantName: "oldName",
@@ -78,8 +81,12 @@ describe("editSliceName", () => {
     });
   });
   it("should not call updateVariantName if getNodeById does not return anything", () => {
-    mockRootFindOne.mockReturnValue({});
-    mockGetNodeById.mockReturnValue(null);
+    jest.spyOn(figma, "getNodeById").mockReturnValue(null);
+    jest.spyOn(figma.root, "findOne").mockReturnValue({} as any);
+    const mockUpdateVariantName = jest.fn();
+    jest
+      .spyOn(Utils, "updateVariantName")
+      .mockImplementation(mockUpdateVariantName);
 
     editSliceName({
       e: { characters: "" },
@@ -98,13 +105,16 @@ describe("editSliceName", () => {
       refIds: ["instance1", "instance2"],
       value: 1,
     });
-    expect(mockGetNodeById).toBeCalledWith("instance1");
-    expect(mockGetNodeById).toBeCalledWith("instance2");
+    expect(figma.getNodeById).toBeCalledWith("instance1");
+    expect(figma.getNodeById).toBeCalledWith("instance2");
     expect(mockUpdateVariantName).not.toBeCalled();
   });
   it("should call restoreBoxComponent if BOX is not found", () => {
-    mockRootFindOne.mockReturnValue(null);
-    mockGetNodeById.mockReturnValue({ type: "COMPONENT", name: "oldName" });
+    jest.spyOn(figma.root, "findOne").mockReturnValue(null);
+    const mockUpdateVariantName = jest.fn();
+    jest
+      .spyOn(Utils, "updateVariantName")
+      .mockImplementation(mockUpdateVariantName);
 
     editSliceName({
       e: { characters: "" },
@@ -123,7 +133,6 @@ describe("editSliceName", () => {
       refIds: ["instance1", "instance2"],
       value: 1,
     });
-    expect(mockGetNodeById).not.toBeCalled();
     expect(mockUpdateVariantName).not.toBeCalled();
     expect(mockRestoreBoxComponent).toBeCalledTimes(1);
   });

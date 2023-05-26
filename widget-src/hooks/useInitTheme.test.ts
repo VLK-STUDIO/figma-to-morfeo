@@ -1,19 +1,12 @@
-import {
-  mockCombineAsVariants,
-  mockRootFindOne,
-} from "../../__mocks__/figmaMock";
 import { useInitTheme } from "./useInitTheme";
 
 describe("useInitTheme", () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
   it("should init the theme with default and create BOX if the state is empty and BOX does not exist", () => {
-    mockRootFindOne.mockReturnValue(null);
+    jest.spyOn(figma.root, "findOne").mockReturnValue(null);
     const mockSet = jest.fn();
     useInitTheme({ size: 0, set: mockSet } as unknown as SyncedMap);
 
-    expect(mockCombineAsVariants).toBeCalled();
+    expect(figma.combineAsVariants).toBeCalled();
     expect(mockSet).toBeCalledWith(expect.any(String), {
       id: expect.any(String),
       name: "none",
@@ -35,15 +28,17 @@ describe("useInitTheme", () => {
   });
 
   it("should not create the BOX component and should not set the state if the state is not empty and the component exist", () => {
-    mockRootFindOne.mockReturnValue({ type: "COMPONENT_SET" });
+    jest
+      .spyOn(figma.root, "findOne")
+      .mockReturnValue({ type: "COMPONENT_SET" } as any);
     const mockSet = jest.fn();
     useInitTheme({ size: 1, set: mockSet } as unknown as SyncedMap);
-    expect(mockCombineAsVariants).not.toBeCalled();
+    expect(figma.combineAsVariants).not.toBeCalled();
     expect(mockSet).not.toBeCalled();
   });
 
   it("should not create the BOX component and should set the state (with current box variants) if the state is empty and the component exist", () => {
-    mockRootFindOne.mockReturnValue({
+    jest.spyOn(figma.root, "findOne").mockReturnValue({
       type: "COMPONENT_SET",
       children: [
         { id: "1", name: "Radius=A", cornerRadius: 10, type: "COMPONENT" },
@@ -51,9 +46,10 @@ describe("useInitTheme", () => {
       ],
     } as unknown as ComponentSetNode);
     const mockSet = jest.fn();
-    useInitTheme({ size: 0, set: mockSet } as unknown as SyncedMap);
-    expect(mockCombineAsVariants).not.toBeCalled();
 
+    useInitTheme({ size: 0, set: mockSet } as unknown as SyncedMap);
+
+    expect(figma.combineAsVariants).not.toBeCalled();
     expect(mockSet).toBeCalledWith(expect.any(String), {
       id: expect.any(String),
       name: "A",
