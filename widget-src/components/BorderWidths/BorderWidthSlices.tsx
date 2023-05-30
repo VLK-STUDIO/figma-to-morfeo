@@ -1,8 +1,6 @@
 import { Slice, Store } from "../../types";
 import { AddButton } from "../Buttons/AddButton";
-import { RadiiSlice } from "./RadiiSlice";
-import { addRadiiSlice } from "./utils";
-
+import { BorderWidthSlice } from "./BorderWidthSlice";
 const { widget } = figma;
 const { Text, AutoLayout } = widget;
 
@@ -10,10 +8,10 @@ type Props = {
   store: Store;
 };
 
-export const RadiiSlices = ({ store }: Props) => {
+export const BorderWidthSlices = ({ store }: Props) => {
   return (
     <AutoLayout
-      name="Radii frame"
+      name="Border width frame"
       strokeWidth={0}
       overflow="visible"
       direction="vertical"
@@ -29,16 +27,16 @@ export const RadiiSlices = ({ store }: Props) => {
         height={35}
       >
         <Text
-          name="Radii"
+          name="Border widths"
           fill="#000"
           fontFamily="Inter"
           fontSize={28.63157844543457}
           fontWeight={500}
           strokeWidth={1.789}
         >
-          Radii
+          Border widths
         </Text>
-        <AddButton onClick={() => addRadiiSlice(store)} />
+        <AddButton onClick={() => {}} />
       </AutoLayout>
       <AutoLayout
         name="Frame 2"
@@ -48,8 +46,8 @@ export const RadiiSlices = ({ store }: Props) => {
         direction="horizontal"
         verticalAlignItems="center"
       >
-        {store[Slice.Radii].values().map((radius) => (
-          <RadiiSlice {...radius} store={store} />
+        {store[Slice.BorderWidths].values().map((borderWidth) => (
+          <BorderWidthSlice {...borderWidth} store={store} />
         ))}
       </AutoLayout>
     </AutoLayout>

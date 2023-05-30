@@ -1,16 +1,18 @@
 import { ComponentNames, BoxPropertyName } from "../constants";
-import { SliceItem } from "../types";
+import { Slice, SliceItem, Store } from "../types";
 import { restoreBoxComponent } from "./restoreBoxComponent";
 import { updateVariantName } from "./utils";
 
 export const editSliceName = (params: {
   slice: SliceItem;
-  e: TextEditEvent;
-  map: SyncedMap<SliceItem>;
+  event: TextEditEvent;
+  propertyName: BoxPropertyName;
+  store: Store;
+  sliceName: Slice;
 }) => {
-  const { e, map, slice } = params;
-  const newName = e.characters || slice.name;
-  map.set(slice.id, {
+  const { event, slice, propertyName, sliceName, store } = params;
+  const newName = event.characters || slice.name;
+  store[sliceName].set(slice.id, {
     ...slice,
     name: newName,
   });
@@ -26,11 +28,11 @@ export const editSliceName = (params: {
         variant.name = updateVariantName({
           instanceName: variant.name,
           newVariantName: newName,
-          propertyName: BoxPropertyName.Radius,
+          propertyName,
         });
       }
     });
     return;
   }
-  restoreBoxComponent(map);
+  restoreBoxComponent(store);
 };

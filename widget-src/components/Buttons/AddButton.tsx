@@ -9,8 +9,6 @@ export const AddButton = ({ onClick }: Props) => {
   return (
     <Frame
       name="Add button"
-      x={82}
-      y={10}
       strokeWidth={0}
       overflow="visible"
       width={20}

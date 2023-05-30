@@ -1,7 +1,8 @@
+import { mockSyncedMap } from "../test-utils/mockSyncedMap";
+import { Slice, Store } from "../types";
 import { editSliceValue } from "./editSliceValue";
 import * as RestoreBoxComponent from "./restoreBoxComponent";
 
-const mockSet = jest.fn();
 const mockRestoreBoxComponent = jest.fn();
 jest
   .spyOn(RestoreBoxComponent, "restoreBoxComponent")
@@ -15,10 +16,14 @@ describe("editSliceValue", () => {
       name: "name",
       value: 0,
     } as any);
+    const stateMap = mockSyncedMap();
+    const store: Store = {
+      [Slice.Radii]: stateMap,
+      [Slice.BorderWidths]: mockSyncedMap(),
+    };
 
     editSliceValue({
-      e: { characters: "1" },
-      map: { set: mockSet } as unknown as SyncedMap,
+      event: { characters: "1" },
       slice: {
         id: "1",
         name: "name",
@@ -26,9 +31,11 @@ describe("editSliceValue", () => {
         value: 1,
       },
       styleKey: "cornerRadius",
+      sliceName: Slice.Radii,
+      store,
     });
 
-    expect(mockSet).toBeCalledWith("1", {
+    expect(stateMap.set).toBeCalledWith("1", {
       id: "1",
       name: "name",
       refIds: ["instance1", "instance2"],
@@ -45,10 +52,14 @@ describe("editSliceValue", () => {
       name: "name",
       value: 1,
     } as any);
+    const stateMap = mockSyncedMap();
+    const store: Store = {
+      [Slice.Radii]: stateMap,
+      [Slice.BorderWidths]: mockSyncedMap(),
+    };
 
     editSliceValue({
-      e: { characters: "any non-number string" },
-      map: { set: mockSet } as unknown as SyncedMap,
+      event: { characters: "any non-number string" },
       slice: {
         id: "1",
         name: "name",
@@ -56,9 +67,11 @@ describe("editSliceValue", () => {
         value: 1,
       },
       styleKey: "cornerRadius",
+      sliceName: Slice.Radii,
+      store,
     });
 
-    expect(mockSet).toBeCalledWith("1", {
+    expect(stateMap.set).toBeCalledWith("1", {
       id: "1",
       name: "name",
       refIds: ["instance1", "instance2"],
@@ -75,10 +88,14 @@ describe("editSliceValue", () => {
       name: "name",
       value: 1,
     } as any);
+    const stateMap = mockSyncedMap();
+    const store: Store = {
+      [Slice.Radii]: stateMap,
+      [Slice.BorderWidths]: mockSyncedMap(),
+    };
 
     editSliceValue({
-      e: { characters: "2" },
-      map: { set: mockSet } as unknown as SyncedMap,
+      event: { characters: "2" },
       slice: {
         id: "1",
         name: "name",
@@ -86,9 +103,11 @@ describe("editSliceValue", () => {
         value: 2,
       },
       styleKey: "cornerRadius",
+      sliceName: Slice.Radii,
+      store,
     });
 
-    expect(mockSet).toBeCalledWith("1", {
+    expect(stateMap.set).toBeCalledWith("1", {
       id: "1",
       name: "name",
       refIds: ["instance1", "instance2"],
@@ -100,10 +119,14 @@ describe("editSliceValue", () => {
   it("should not crash if getNodeById returns null", () => {
     jest.spyOn(figma.root, "findOne").mockReturnValue({} as any);
     jest.spyOn(figma, "getNodeById").mockReturnValue(null);
+    const stateMap = mockSyncedMap();
+    const store: Store = {
+      [Slice.Radii]: stateMap,
+      [Slice.BorderWidths]: mockSyncedMap(),
+    };
 
     editSliceValue({
-      e: { characters: "2" },
-      map: { set: mockSet } as unknown as SyncedMap,
+      event: { characters: "2" },
       slice: {
         id: "1",
         name: "name",
@@ -111,9 +134,11 @@ describe("editSliceValue", () => {
         value: 2,
       },
       styleKey: "cornerRadius",
+      sliceName: Slice.Radii,
+      store,
     });
 
-    expect(mockSet).toBeCalledWith("1", {
+    expect(stateMap.set).toBeCalledWith("1", {
       id: "1",
       name: "name",
       refIds: ["instance1", "instance2"],

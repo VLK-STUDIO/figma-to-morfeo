@@ -1,14 +1,20 @@
-import { SliceItem } from "./types";
+import { Slice, SliceItem } from "./types";
 import { RadiiSlices } from "./components/Radii/RadiiSlices";
 import { useInitTheme } from "./hooks/useInitTheme";
+import { BorderWidthSlices } from "./components/BorderWidths/BorderWidthSlices";
 
 const { widget } = figma;
 const { useSyncedMap, AutoLayout } = widget;
 
 function Widget() {
-  const radiiMap = useSyncedMap<SliceItem>("radii");
+  const radiiMap = useSyncedMap<SliceItem>(Slice.Radii);
+  const borderWidthsMap = useSyncedMap<SliceItem>(Slice.BorderWidths);
+  const store = {
+    [Slice.Radii]: radiiMap,
+    [Slice.BorderWidths]: borderWidthsMap,
+  };
 
-  useInitTheme(radiiMap);
+  useInitTheme(store);
 
   return (
     <AutoLayout
@@ -24,7 +30,8 @@ function Widget() {
       }}
       verticalAlignItems="center"
     >
-      <RadiiSlices radiiMap={radiiMap} />
+      <RadiiSlices store={store} />
+      <BorderWidthSlices store={store} />
     </AutoLayout>
   );
 }

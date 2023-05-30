@@ -6,16 +6,16 @@ import { editSliceValue } from "../../utils/editSliceValue";
 import { DeleteButton } from "../Buttons/DeleteButton";
 
 const { widget } = figma;
-const { Frame, Rectangle, Input, AutoLayout } = widget;
+const { Frame, Line, Input, AutoLayout } = widget;
 
 interface Props extends SliceItem {
   store: Store;
 }
 
-export const RadiiSlice = ({ store, ...slice }: Props) => {
+export const BorderWidthSlice = ({ store, ...slice }: Props) => {
   return (
     <AutoLayout
-      name="Radius Slice"
+      name="Border width Slice"
       strokeWidth={0}
       overflow="visible"
       direction="horizontal"
@@ -24,16 +24,29 @@ export const RadiiSlice = ({ store, ...slice }: Props) => {
       key={slice.id}
     >
       <Frame width={41} height={41}>
-        <Rectangle
-          name="Slice preview"
-          fill="#D9D9D9"
-          cornerRadius={{ topRight: slice.value }}
-          width={41}
-          height={41}
-        />
+        <Frame name="Frame3" overflow="visible" width={41} height={41}>
+          <Line
+            name="Rectangle 19"
+            y={20.5 + slice.value / 2}
+            stroke="#000"
+            strokeWidth={slice.value}
+            length={16 + slice.value}
+            strokeCap="round"
+          />
+          <Line
+            name="Rectangle 19"
+            y={20.5 + slice.value / 2}
+            stroke="#000"
+            strokeWidth={slice.value}
+            strokeDashPattern={[1, 5 + slice.value]}
+            length={14}
+            x={20 + slice.value}
+            strokeCap="round"
+          />
+        </Frame>
         <DeleteButton
           onClick={() =>
-            deleteSlice({ id: slice.id, sliceName: Slice.Radii, store })
+            deleteSlice({ id: slice.id, sliceName: Slice.BorderWidths, store })
           }
         />
       </Frame>
@@ -53,15 +66,15 @@ export const RadiiSlice = ({ store, ...slice }: Props) => {
             editSliceName({
               event,
               slice,
-              propertyName: BoxPropertyName.Radius,
-              sliceName: Slice.Radii,
+              propertyName: BoxPropertyName.BorderWidth,
+              sliceName: Slice.BorderWidths,
               store,
             })
           }
         />
         <Input
           width="fill-parent"
-          name="Radius value"
+          name="Border width value"
           x={48}
           y={21}
           fill="#000"
@@ -73,10 +86,10 @@ export const RadiiSlice = ({ store, ...slice }: Props) => {
           onTextEditEnd={(event) =>
             editSliceValue({
               event,
-              sliceName: Slice.Radii,
-              store,
+              sliceName: Slice.BorderWidths,
               slice,
-              styleKey: "cornerRadius",
+              styleKey: "strokeWeight",
+              store,
             })
           }
         />
