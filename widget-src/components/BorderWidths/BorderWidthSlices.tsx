@@ -1,6 +1,7 @@
 import { Slice, Store } from "../../types";
 import { AddButton } from "../Buttons/AddButton";
 import { BorderWidthSlice } from "./BorderWidthSlice";
+import { addBorderWidthSlice } from "./utils";
 const { widget } = figma;
 const { Text, AutoLayout } = widget;
 
@@ -36,7 +37,7 @@ export const BorderWidthSlices = ({ store }: Props) => {
         >
           Border widths
         </Text>
-        <AddButton onClick={() => {}} />
+        <AddButton onClick={() => addBorderWidthSlice(store)} />
       </AutoLayout>
       <AutoLayout
         name="Frame 2"
