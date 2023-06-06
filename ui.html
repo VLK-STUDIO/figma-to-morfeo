@@ -1,0 +1,21 @@
+<body></body>
+<script src="script.js"></script>
+<script>
+  function download(object) {
+    const a = document.createElement("a");
+    const file = new File([JSON.stringify(object, null, 2)], "theme.json");
+    a.download = file.name;
+    a.href = URL.createObjectURL(file);
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+
+  window.onmessage = (event) => {
+    const { type, meta } = event.data.pluginMessage;
+    if (type === "download-theme") {
+      download(meta);
+      parent.postMessage({ pluginMessage: { type: "close-plugin" } }, "*");
+    }
+  };
+</script>

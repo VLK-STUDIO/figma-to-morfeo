@@ -1,10 +1,11 @@
-import { Slice, SliceItem } from "./types";
+import { ActionTypes, Slice, SliceItem } from "./types";
 import { RadiiSlices } from "./components/Radii/RadiiSlices";
 import { useInitTheme } from "./hooks/useInitTheme";
 import { BorderWidthSlices } from "./components/BorderWidths/BorderWidthSlices";
+import { downloadTheme } from "./utils/downloadTheme";
 
 const { widget } = figma;
-const { useSyncedMap, AutoLayout } = widget;
+const { useSyncedMap, AutoLayout, usePropertyMenu, useEffect } = widget;
 
 function Widget() {
   const radiiMap = useSyncedMap<SliceItem>(Slice.Radii);
@@ -15,6 +16,31 @@ function Widget() {
   };
 
   useInitTheme(store);
+
+  useEffect(() => {
+    figma.ui.onmessage = (msg) => {
+      if (msg.type === ActionTypes.closePlugin) {
+        figma.closePlugin();
+      }
+    };
+  });
+
+  usePropertyMenu(
+    [
+      {
+        itemType: "action",
+        propertyName: "Download",
+        tooltip: "Download",
+      },
+    ],
+    ({ propertyName }) => {
+      if (propertyName === "Download") {
+        return new Promise(() => {
+          downloadTheme(store);
+        });
+      }
+    }
+  );
 
   return (
     <AutoLayout
