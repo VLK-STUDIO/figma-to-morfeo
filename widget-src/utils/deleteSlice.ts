@@ -1,9 +1,15 @@
 import { ComponentNames } from "../constants";
-import { SliceItem } from "../types";
+import { Slice, Store } from "../types";
 import { restoreBoxComponent } from "./restoreBoxComponent";
 
-export const deleteSlice = (id: string, map: SyncedMap<SliceItem>) => {
-  if (map.size < 1) {
+export const deleteSlice = (params: {
+  id: string;
+  store: Store;
+  sliceName: Slice;
+}) => {
+  const { id, sliceName, store } = params;
+  const stateMap = store[sliceName];
+  if (stateMap.size < 1) {
     figma.notify("Impossible to remove all slices. Please keep at least one", {
       error: true,
       timeout: 3000,
@@ -15,15 +21,17 @@ export const deleteSlice = (id: string, map: SyncedMap<SliceItem>) => {
     (node) => node.type === "COMPONENT_SET" && node.name === ComponentNames.Box
   );
 
-  const refIds = map.get(id)?.refIds || [];
-  map.delete(id);
+  const refIds = stateMap.get(id)?.refIds;
+  stateMap.delete(id);
 
-  if (boxComponent) {
+  if (boxComponent && refIds) {
     refIds.map((refId) => {
       figma.getNodeById(refId)?.remove();
     });
     return;
   }
 
-  restoreBoxComponent(map);
+  if (!boxComponent) {
+    restoreBoxComponent(store);
+  }
 };

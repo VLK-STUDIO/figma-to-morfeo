@@ -2,7 +2,7 @@ import { ComponentNames } from "../../constants";
 import { mockSyncedMap } from "../../test-utils/mockSyncedMap";
 import { Slice, SliceItem } from "../../types";
 import * as UpdateRefIds from "../../utils/updateRefIds";
-import { addRadiiSlice } from "./utils";
+import { addBorderWidthSlice } from "./utils";
 
 describe("addRadiiSlice", () => {
   it("should add new sliceItems on the state and append new instances to the box", () => {
@@ -14,39 +14,39 @@ describe("addRadiiSlice", () => {
     } as any);
     const spyUpdateRefIds = jest.spyOn(UpdateRefIds, "updateRefIds");
 
-    const mockRadiiMap = mockSyncedMap({
+    const mockBorderWidthsMap = mockSyncedMap({
       "1": { id: "1", name: "S", refIds: [], value: 1 },
     });
-    const mockBorderWidthsMap = mockSyncedMap({
+    const mockRadiiMap = mockSyncedMap({
       "1": { id: "1", name: "A", refIds: [], value: 3 },
       "2": { id: "2", name: "B", refIds: [], value: 6 },
     });
 
-    addRadiiSlice({
-      [Slice.Radii]: mockRadiiMap,
+    addBorderWidthSlice({
       [Slice.BorderWidths]: mockBorderWidthsMap,
+      [Slice.Radii]: mockRadiiMap,
     });
 
-    expect(mockRadiiMap.set).toBeCalledWith(expect.any(String), {
+    expect(mockBorderWidthsMap.set).toBeCalledWith(expect.any(String), {
       id: expect.any(String),
       name: "N",
       value: 0,
       refIds: expect.any(Array),
     } as SliceItem);
-    expect(mockRadiiMap.set).toBeCalledTimes(1);
+    expect(mockBorderWidthsMap.set).toBeCalledTimes(1);
 
     expect(mockAppendChild).toBeCalledWith(
       expect.objectContaining({
-        name: "Radius=N, Border width=A",
-        cornerRadius: 0,
-        strokeWeight: 3,
+        name: "Border width=N, Radius=A",
+        cornerRadius: 3,
+        strokeWeight: 0,
       })
     );
     expect(mockAppendChild).toBeCalledWith(
       expect.objectContaining({
-        name: "Radius=N, Border width=B",
-        cornerRadius: 0,
-        strokeWeight: 6,
+        name: "Border width=N, Radius=B",
+        cornerRadius: 6,
+        strokeWeight: 0,
       })
     );
     expect(mockAppendChild).toBeCalledTimes(2);
@@ -74,15 +74,15 @@ describe("addRadiiSlice", () => {
     const mockAppendChild = jest.fn();
     const spyUpdateRefIds = jest.spyOn(UpdateRefIds, "updateRefIds");
     jest.spyOn(figma.root, "findOne").mockReturnValue(null);
-    const mockRadiiMap = mockSyncedMap({
+    const mockBorderWidthsMap = mockSyncedMap({
       "1": { id: "1", name: "S", refIds: ["abc"], value: 1 },
     });
-    const mockBorderWidthsMap = mockSyncedMap({
+    const mockRadiiMap = mockSyncedMap({
       "1": { id: "1", name: "A", refIds: [], value: 3 },
       "2": { id: "2", name: "B", refIds: [], value: 6 },
     });
 
-    addRadiiSlice({
+    addBorderWidthSlice({
       [Slice.Radii]: mockRadiiMap,
       [Slice.BorderWidths]: mockBorderWidthsMap,
     });
@@ -92,15 +92,15 @@ describe("addRadiiSlice", () => {
     expect(spyUpdateRefIds).not.toBeCalled();
 
     // reset state
-    expect(mockRadiiMap.delete).toBeCalledTimes(2);
+    expect(mockBorderWidthsMap.delete).toBeCalledTimes(2);
     // set up new state (updated sliceItems + new one)
-    expect(mockRadiiMap.set).toBeCalledWith(expect.any(String), {
+    expect(mockBorderWidthsMap.set).toBeCalledWith(expect.any(String), {
       id: expect.any(String),
       name: "N",
       value: 0,
       refIds: expect.any(Array),
     } as SliceItem);
-    expect(mockRadiiMap.set).toBeCalledWith(expect.any(String), {
+    expect(mockBorderWidthsMap.set).toBeCalledWith(expect.any(String), {
       id: expect.any(String),
       name: "S",
       value: 1,

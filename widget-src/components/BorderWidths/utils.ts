@@ -6,7 +6,7 @@ import { getVariantCombinations } from "../../utils/getVariantCombinations";
 import { restoreBoxComponent } from "../../utils/restoreBoxComponent";
 import { updateRefIds } from "../../utils/updateRefIds";
 
-export const addRadiiSlice = (store: Store) => {
+export const addBorderWidthSlice = (store: Store) => {
   const { [Slice.Radii]: radiiMap, [Slice.BorderWidths]: borderWidthsMap } =
     store;
   const boxComponent = figma.root.findOne(
@@ -14,29 +14,29 @@ export const addRadiiSlice = (store: Store) => {
   );
   if (boxComponent?.type === "COMPONENT_SET") {
     const boxVariants = getVariantCombinations([
-      { propertyName: BoxPropertyName.Radius, variants: { N: 0 } },
+      { propertyName: BoxPropertyName.BorderWidth, variants: { N: 0 } },
       {
-        propertyName: BoxPropertyName.BorderWidth,
-        variants: getBoxVariantsFromState(borderWidthsMap.values()),
+        propertyName: BoxPropertyName.Radius,
+        variants: getBoxVariantsFromState(radiiMap.values()),
       },
     ]);
     const { instances, sliceItems } = createBoxInstances(boxVariants);
     instances.forEach((instance) => boxComponent.appendChild(instance));
 
     // save the updated state
-    sliceItems[BoxPropertyName.Radius].forEach((sliceItem) =>
-      radiiMap.set(sliceItem.id, sliceItem)
+    sliceItems[BoxPropertyName.BorderWidth].forEach((sliceItem) =>
+      borderWidthsMap.set(sliceItem.id, sliceItem)
     );
 
-    const newBorderWidthsSliceItems = sliceItems[BoxPropertyName.BorderWidth];
+    const newRadiiSliceItems = sliceItems[BoxPropertyName.Radius];
     updateRefIds({
-      newSliceItems: newBorderWidthsSliceItems,
-      stateMap: borderWidthsMap,
+      newSliceItems: newRadiiSliceItems,
+      stateMap: radiiMap,
     });
   }
 
   if (!boxComponent) {
-    radiiMap.set("N", { id: "N", name: "N", refIds: [], value: 0 });
+    borderWidthsMap.set("N", { id: "N", name: "N", refIds: [], value: 0 });
     restoreBoxComponent(store);
   }
 };

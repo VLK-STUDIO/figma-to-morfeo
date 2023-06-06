@@ -9,6 +9,11 @@ export function DeleteButton(props: { onClick: () => void }) {
       name="DeleteButton"
       opacity={0}
       hoverStyle={{ opacity: 1 }}
+      fill={{
+        type: "solid",
+        color: { r: 0.5, g: 0.5, b: 0.5, a: 1 },
+        visible: true,
+      }}
       tooltip="Delete this variant and all related component instances"
       {...props}
     >

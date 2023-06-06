@@ -2,8 +2,9 @@ import { BoxPropertyName } from "../constants";
 import { editSliceName } from "./editSliceName";
 import * as Utils from "./utils";
 import * as RestoreBoxComponent from "./restoreBoxComponent";
+import { Slice, Store } from "../types";
+import { mockSyncedMap } from "../test-utils/mockSyncedMap";
 
-const mockSet = jest.fn();
 const mockRestoreBoxComponent = jest.fn();
 jest
   .spyOn(RestoreBoxComponent, "restoreBoxComponent")
@@ -19,19 +20,26 @@ describe("editSliceName", () => {
     jest
       .spyOn(Utils, "updateVariantName")
       .mockImplementation(mockUpdateVariantName);
+    const stateMap = mockSyncedMap();
+    const store: Store = {
+      [Slice.Radii]: stateMap,
+      [Slice.BorderWidths]: mockSyncedMap(),
+    };
 
     editSliceName({
-      e: { characters: "newName" },
-      map: { set: mockSet } as unknown as SyncedMap,
+      event: { characters: "newName" },
       slice: {
         id: "1",
         name: "oldName",
         refIds: ["instance1", "instance2"],
         value: 1,
       },
+      propertyName: BoxPropertyName.Radius,
+      sliceName: Slice.Radii,
+      store,
     });
 
-    expect(mockSet).toBeCalledWith("1", {
+    expect(stateMap.set).toBeCalledWith("1", {
       id: "1",
       name: "newName",
       refIds: ["instance1", "instance2"],
@@ -54,19 +62,26 @@ describe("editSliceName", () => {
     jest
       .spyOn(Utils, "updateVariantName")
       .mockImplementation(mockUpdateVariantName);
+    const stateMap = mockSyncedMap();
+    const store: Store = {
+      [Slice.Radii]: stateMap,
+      [Slice.BorderWidths]: mockSyncedMap(),
+    };
 
     editSliceName({
-      e: { characters: "" },
-      map: { set: mockSet } as unknown as SyncedMap,
+      event: { characters: "" },
       slice: {
         id: "1",
         name: "oldName",
         refIds: ["instance1", "instance2"],
         value: 1,
       },
+      propertyName: BoxPropertyName.Radius,
+      sliceName: Slice.Radii,
+      store,
     });
 
-    expect(mockSet).toBeCalledWith("1", {
+    expect(stateMap.set).toBeCalledWith("1", {
       id: "1",
       name: "oldName",
       refIds: ["instance1", "instance2"],
@@ -87,19 +102,26 @@ describe("editSliceName", () => {
     jest
       .spyOn(Utils, "updateVariantName")
       .mockImplementation(mockUpdateVariantName);
+    const stateMap = mockSyncedMap();
+    const store: Store = {
+      [Slice.Radii]: stateMap,
+      [Slice.BorderWidths]: mockSyncedMap(),
+    };
 
     editSliceName({
-      e: { characters: "" },
-      map: { set: mockSet } as unknown as SyncedMap,
+      event: { characters: "" },
       slice: {
         id: "1",
         name: "oldName",
         refIds: ["instance1", "instance2"],
         value: 1,
       },
+      propertyName: BoxPropertyName.Radius,
+      sliceName: Slice.Radii,
+      store,
     });
 
-    expect(mockSet).toBeCalledWith("1", {
+    expect(stateMap.set).toBeCalledWith("1", {
       id: "1",
       name: "oldName",
       refIds: ["instance1", "instance2"],
@@ -115,19 +137,26 @@ describe("editSliceName", () => {
     jest
       .spyOn(Utils, "updateVariantName")
       .mockImplementation(mockUpdateVariantName);
+    const stateMap = mockSyncedMap();
+    const store: Store = {
+      [Slice.Radii]: stateMap,
+      [Slice.BorderWidths]: mockSyncedMap(),
+    };
 
     editSliceName({
-      e: { characters: "" },
-      map: { set: mockSet } as unknown as SyncedMap,
+      event: { characters: "" },
       slice: {
         id: "1",
         name: "oldName",
         refIds: ["instance1", "instance2"],
         value: 1,
       },
+      propertyName: BoxPropertyName.Radius,
+      sliceName: Slice.Radii,
+      store,
     });
 
-    expect(mockSet).toBeCalledWith("1", {
+    expect(stateMap.set).toBeCalledWith("1", {
       id: "1",
       name: "oldName",
       refIds: ["instance1", "instance2"],

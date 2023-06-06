@@ -1,19 +1,16 @@
-import { BoxPropertyName } from "../constants";
 import { SliceItem } from "../types";
 import { GetVariantsParams } from "./getVariantCombinations";
 
-export const getBoxVariantsFromState = (
-  radiiSliceItems: SliceItem[]
-): GetVariantsParams => {
-  const variants = radiiSliceItems.reduce<GetVariantsParams[0]["variants"]>(
-    (acc, radiiSliceItem) => {
+export const getBoxVariantsFromState = (sliceItems: SliceItem[]) => {
+  const variants = sliceItems.reduce<GetVariantsParams[0]["variants"]>(
+    (acc, sliceItem) => {
       return {
         ...acc,
-        [radiiSliceItem.name]: radiiSliceItem.value,
+        [sliceItem.name]: sliceItem.value,
       };
     },
     {}
   );
 
-  return [{ propertyName: BoxPropertyName.Radius, variants }];
+  return variants;
 };

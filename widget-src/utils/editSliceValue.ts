@@ -1,16 +1,17 @@
 import { ComponentNames } from "../constants";
-import { SliceItem, BoxStyleKeys } from "../types";
+import { SliceItem, BoxStyleKeys, Store, Slice } from "../types";
 import { restoreBoxComponent } from "./restoreBoxComponent";
 
 export const editSliceValue = (params: {
   slice: SliceItem;
-  e: TextEditEvent;
-  map: SyncedMap<SliceItem>;
+  event: TextEditEvent;
   styleKey: BoxStyleKeys;
+  store: Store;
+  sliceName: Slice;
 }) => {
-  const { e, map, slice, styleKey } = params;
-  const newValue = Number(e.characters) || slice.value;
-  map.set(slice.id, {
+  const { event, slice, styleKey, store, sliceName } = params;
+  const newValue = Number(event.characters) || slice.value;
+  store[sliceName].set(slice.id, {
     ...slice,
     value: newValue,
   });
@@ -28,5 +29,5 @@ export const editSliceValue = (params: {
     });
     return;
   }
-  restoreBoxComponent(map);
+  restoreBoxComponent(store);
 };

@@ -16,6 +16,10 @@ export const defaultBoxVariants: GetVariantsParams = [
     propertyName: BoxPropertyName.Radius,
     variants: { none: 0, XS: 1, L: 10 },
   },
+  {
+    propertyName: BoxPropertyName.BorderWidth,
+    variants: { XS: 2, L: 3, M: 5 },
+  },
 ];
 
 export enum ComponentNames {

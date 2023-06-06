@@ -1,25 +1,30 @@
+import { mockSyncedMap } from "../test-utils/mockSyncedMap";
+import { Slice } from "../types";
 import { useInitTheme } from "./useInitTheme";
 
 describe("useInitTheme", () => {
   it("should init the theme with default and create BOX if the state is empty and BOX does not exist", () => {
     jest.spyOn(figma.root, "findOne").mockReturnValue(null);
-    const mockSet = jest.fn();
-    useInitTheme({ size: 0, set: mockSet } as unknown as SyncedMap);
+    const mockState = mockSyncedMap();
+    useInitTheme({
+      [Slice.Radii]: mockState,
+      [Slice.BorderWidths]: mockState,
+    });
 
     expect(figma.combineAsVariants).toBeCalled();
-    expect(mockSet).toBeCalledWith(expect.any(String), {
+    expect(mockState.set).toBeCalledWith(expect.any(String), {
       id: expect.any(String),
       name: "none",
       value: 0,
       refIds: expect.any(Array),
     });
-    expect(mockSet).toBeCalledWith(expect.any(String), {
+    expect(mockState.set).toBeCalledWith(expect.any(String), {
       id: expect.any(String),
       name: "XS",
       value: 1,
       refIds: expect.any(Array),
     });
-    expect(mockSet).toBeCalledWith(expect.any(String), {
+    expect(mockState.set).toBeCalledWith(expect.any(String), {
       id: expect.any(String),
       name: "L",
       value: 10,
@@ -31,10 +36,15 @@ describe("useInitTheme", () => {
     jest
       .spyOn(figma.root, "findOne")
       .mockReturnValue({ type: "COMPONENT_SET" } as any);
-    const mockSet = jest.fn();
-    useInitTheme({ size: 1, set: mockSet } as unknown as SyncedMap);
+    const mockState = mockSyncedMap({
+      anyId: { id: "anyId", name: "A", refIds: [], value: 1 },
+    });
+    useInitTheme({
+      [Slice.Radii]: mockState,
+      [Slice.BorderWidths]: mockState,
+    });
     expect(figma.combineAsVariants).not.toBeCalled();
-    expect(mockSet).not.toBeCalled();
+    expect(mockState.set).not.toBeCalled();
   });
 
   it("should not create the BOX component and should set the state (with current box variants) if the state is empty and the component exist", () => {
@@ -45,18 +55,20 @@ describe("useInitTheme", () => {
         { id: "2", name: "Radius=B", cornerRadius: 20, type: "COMPONENT" },
       ],
     } as unknown as ComponentSetNode);
-    const mockSet = jest.fn();
-
-    useInitTheme({ size: 0, set: mockSet } as unknown as SyncedMap);
+    const mockState = mockSyncedMap();
+    useInitTheme({
+      [Slice.Radii]: mockState,
+      [Slice.BorderWidths]: mockState,
+    });
 
     expect(figma.combineAsVariants).not.toBeCalled();
-    expect(mockSet).toBeCalledWith(expect.any(String), {
+    expect(mockState.set).toBeCalledWith(expect.any(String), {
       id: expect.any(String),
       name: "A",
       value: 10,
       refIds: ["1"],
     });
-    expect(mockSet).toBeCalledWith(expect.any(String), {
+    expect(mockState.set).toBeCalledWith(expect.any(String), {
       id: expect.any(String),
       name: "B",
       value: 20,

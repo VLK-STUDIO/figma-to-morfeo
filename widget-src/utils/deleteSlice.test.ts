@@ -1,8 +1,9 @@
+import { mockSyncedMap } from "../test-utils/mockSyncedMap";
+import { Slice, Store } from "../types";
 import { deleteSlice } from "./deleteSlice";
 import * as RestoreBoxComponent from "./restoreBoxComponent";
 
 const mockRestoreBoxComponent = jest.fn();
-const mockDelete = jest.fn();
 const mockRemove = jest.fn();
 jest
   .spyOn(RestoreBoxComponent, "restoreBoxComponent")
@@ -10,12 +11,14 @@ jest
 
 describe("deleteSlice", () => {
   it("should call notify and do nothing else if the state is empty", () => {
-    deleteSlice("any id", {
-      delete: mockDelete,
-      size: 0,
-    } as unknown as SyncedMap);
+    const stateMap = mockSyncedMap();
+    const store: Store = {
+      [Slice.Radii]: stateMap,
+      [Slice.BorderWidths]: stateMap,
+    };
+    deleteSlice({ id: "anyId", sliceName: Slice.Radii, store });
 
-    expect(mockDelete).not.toBeCalled();
+    expect(stateMap.delete).not.toBeCalled();
     expect(figma.notify).toBeCalledTimes(1);
   });
 
@@ -25,14 +28,26 @@ describe("deleteSlice", () => {
       .spyOn(figma, "getNodeById")
       .mockReturnValue({ remove: mockRemove } as any);
 
-    deleteSlice("any id", {
-      delete: mockDelete,
-      size: 1,
-      get: () => ({ refIds: ["instance id 1", "instance id 2"] }),
-    } as unknown as SyncedMap);
+    const radiiStateMap = mockSyncedMap({
+      anyId: {
+        refIds: ["instance id 1", "instance id 2"],
+        id: "anyId",
+        name: "A",
+        value: 1,
+      },
+    });
+    const borderWidthsStateMap = mockSyncedMap();
+    const store: Store = {
+      [Slice.Radii]: radiiStateMap,
+      [Slice.BorderWidths]: borderWidthsStateMap,
+    };
+
+    deleteSlice({ store, id: "anyId", sliceName: Slice.Radii });
 
     expect(figma.notify).not.toBeCalled();
-    expect(mockDelete).toBeCalledTimes(1);
+    expect(radiiStateMap.delete).toBeCalledTimes(1);
+    expect(radiiStateMap.delete).toBeCalledWith("anyId");
+
     expect(mockRemove).toBeCalledTimes(2);
   });
 
@@ -41,12 +56,43 @@ describe("deleteSlice", () => {
     jest
       .spyOn(figma, "getNodeById")
       .mockReturnValue({ remove: mockRemove } as any);
+    const stateMap = mockSyncedMap({
+      anyId: {
+        refIds: [],
+        id: "anyId",
+        name: "A",
+        value: 1,
+      },
+    });
+    const store: Store = {
+      [Slice.Radii]: stateMap,
+      [Slice.BorderWidths]: stateMap,
+    };
 
-    deleteSlice("any id", {
-      delete: mockDelete,
-      size: 1,
-      get: () => undefined,
-    } as unknown as SyncedMap);
+    deleteSlice({ id: "anyId", sliceName: Slice.Radii, store });
+
+    expect(mockRemove).not.toBeCalled();
+  });
+
+  it("should not call remove if try to delete a non-existent item", () => {
+    jest.spyOn(figma.root, "findOne").mockReturnValue({} as any);
+    jest
+      .spyOn(figma, "getNodeById")
+      .mockReturnValue({ remove: mockRemove } as any);
+    const stateMap = mockSyncedMap({
+      anyId: {
+        refIds: [],
+        id: "anyId",
+        name: "A",
+        value: 1,
+      },
+    });
+    const store: Store = {
+      [Slice.Radii]: stateMap,
+      [Slice.BorderWidths]: stateMap,
+    };
+
+    deleteSlice({ id: "non-existent-items", sliceName: Slice.Radii, store });
 
     expect(mockRemove).not.toBeCalled();
   });
@@ -55,11 +101,20 @@ describe("deleteSlice", () => {
     jest.spyOn(figma.root, "findOne").mockReturnValue({} as any);
     jest.spyOn(figma, "getNodeById").mockReturnValue(null);
 
-    deleteSlice("any id", {
-      delete: mockDelete,
-      size: 1,
-      get: () => ({ refIds: ["1", "2"] }),
-    } as unknown as SyncedMap);
+    const stateMap = mockSyncedMap({
+      anyId: {
+        refIds: ["instance id 1"],
+        id: "anyId",
+        name: "A",
+        value: 1,
+      },
+    });
+    const store: Store = {
+      [Slice.Radii]: stateMap,
+      [Slice.BorderWidths]: stateMap,
+    };
+
+    deleteSlice({ id: "anyId", sliceName: Slice.Radii, store });
 
     expect(mockRemove).not.toBeCalled();
   });
@@ -70,14 +125,23 @@ describe("deleteSlice", () => {
       .spyOn(figma, "getNodeById")
       .mockReturnValue({ remove: mockRemove } as any);
 
-    deleteSlice("any id", {
-      delete: mockDelete,
-      size: 1,
-      get: () => ({ refIds: ["instance id 1", "instance id 2"] }),
-    } as unknown as SyncedMap);
+    const stateMap = mockSyncedMap({
+      anyId: {
+        refIds: ["instance id 1"],
+        id: "anyId",
+        name: "A",
+        value: 1,
+      },
+    });
+    const store: Store = {
+      [Slice.Radii]: stateMap,
+      [Slice.BorderWidths]: stateMap,
+    };
+
+    deleteSlice({ id: "anyId", sliceName: Slice.Radii, store });
 
     expect(figma.notify).not.toBeCalled();
-    expect(mockDelete).toBeCalledTimes(1);
+    expect(stateMap.delete).toBeCalledTimes(1);
     expect(mockRestoreBoxComponent).toBeCalledTimes(1);
   });
 });
