@@ -1,5 +1,5 @@
 import { mockSyncedMap } from "../test-utils/mockSyncedMap";
-import { Slice, Store } from "../types";
+import { BoxSliceItem, Slice } from "../types";
 import { editSliceValue } from "./editSliceValue";
 import * as RestoreBoxComponent from "./restoreBoxComponent";
 
@@ -16,10 +16,10 @@ describe("editSliceValue", () => {
       name: "name",
       value: 0,
     } as any);
-    const stateMap = mockSyncedMap();
-    const store: Store = {
+    const stateMap = mockSyncedMap<BoxSliceItem>();
+    const store = {
       [Slice.Radii]: stateMap,
-      [Slice.BorderWidths]: mockSyncedMap(),
+      [Slice.BorderWidths]: mockSyncedMap<BoxSliceItem>(),
     };
 
     editSliceValue({
@@ -52,10 +52,10 @@ describe("editSliceValue", () => {
       name: "name",
       value: 1,
     } as any);
-    const stateMap = mockSyncedMap();
-    const store: Store = {
+    const stateMap = mockSyncedMap<BoxSliceItem>();
+    const store = {
       [Slice.Radii]: stateMap,
-      [Slice.BorderWidths]: mockSyncedMap(),
+      [Slice.BorderWidths]: mockSyncedMap<BoxSliceItem>(),
     };
 
     editSliceValue({
@@ -88,10 +88,10 @@ describe("editSliceValue", () => {
       name: "name",
       value: 1,
     } as any);
-    const stateMap = mockSyncedMap();
-    const store: Store = {
+    const stateMap = mockSyncedMap<BoxSliceItem>();
+    const store = {
       [Slice.Radii]: stateMap,
-      [Slice.BorderWidths]: mockSyncedMap(),
+      [Slice.BorderWidths]: mockSyncedMap<BoxSliceItem>(),
     };
 
     editSliceValue({
@@ -119,10 +119,10 @@ describe("editSliceValue", () => {
   it("should not crash if getNodeById returns null", () => {
     jest.spyOn(figma.root, "findOne").mockReturnValue({} as any);
     jest.spyOn(figma, "getNodeById").mockReturnValue(null);
-    const stateMap = mockSyncedMap();
-    const store: Store = {
+    const stateMap = mockSyncedMap<BoxSliceItem>();
+    const store = {
       [Slice.Radii]: stateMap,
-      [Slice.BorderWidths]: mockSyncedMap(),
+      [Slice.BorderWidths]: mockSyncedMap<BoxSliceItem>(),
     };
 
     editSliceValue({

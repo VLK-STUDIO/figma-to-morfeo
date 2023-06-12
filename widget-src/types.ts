@@ -1,11 +1,21 @@
 import { BoxPropertyName } from "./constants";
 
-export type SliceItem = {
+interface BaseSliceItem {
   name: string;
-  value: number;
   id: string;
+}
+
+export interface BoxSliceItem extends BaseSliceItem {
+  value: number;
   refIds: string[];
-};
+}
+
+export interface ColorSliceItem extends BaseSliceItem {
+  rgba: RGBA;
+  libStyleId: string;
+}
+
+export type SliceItem = BoxSliceItem | ColorSliceItem;
 
 export type BoxStyleKeys = keyof Pick<
   ComponentNode,
@@ -16,14 +26,21 @@ export type BoxVariant = {
   name: string;
 } & Record<BoxStyleKeys, number>;
 
-export type BoxSliceItems = Record<BoxPropertyName, SliceItem[]>;
+export type BoxSliceItems = Record<BoxPropertyName, BoxSliceItem[]>;
 
 export enum Slice {
   Radii = "radii",
   BorderWidths = "borderWidths",
+  Colors = "colors",
 }
 
-export type Store = Record<Slice, SyncedMap<SliceItem>>;
+export type Store = {
+  [Slice.BorderWidths]: SyncedMap<BoxSliceItem>;
+  [Slice.Radii]: SyncedMap<BoxSliceItem>;
+  [Slice.Colors]: SyncedMap<ColorSliceItem>;
+};
+
+export type BoxStore = Omit<Store, Slice.Colors>;
 
 export enum ActionTypes {
   downloadTheme = "download-theme",

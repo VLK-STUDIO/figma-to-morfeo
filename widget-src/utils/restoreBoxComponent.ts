@@ -1,5 +1,5 @@
 import { BoxPropertyName, ComponentNames } from "../constants";
-import { Slice, Store } from "../types";
+import { BoxStore, Slice } from "../types";
 import { createBoxInstances } from "./createBoxInstances";
 import { getBoxVariantsFromState } from "./getBoxVariantsFromState";
 import { getVariantCombinations } from "./getVariantCombinations";
@@ -10,7 +10,7 @@ import { getVariantCombinations } from "./getVariantCombinations";
  * using new instances created
  */
 
-export const restoreBoxComponent = (store: Store) => {
+export const restoreBoxComponent = (store: BoxStore) => {
   const { [Slice.Radii]: radiiMap, [Slice.BorderWidths]: borderWidthsMap } =
     store;
 

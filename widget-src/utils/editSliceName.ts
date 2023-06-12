@@ -1,14 +1,14 @@
 import { ComponentNames, BoxPropertyName } from "../constants";
-import { Slice, SliceItem, Store } from "../types";
+import { BoxSliceItem, BoxStore, Slice } from "../types";
 import { restoreBoxComponent } from "./restoreBoxComponent";
 import { updateVariantName } from "./utils";
 
 export const editSliceName = (params: {
-  slice: SliceItem;
+  slice: BoxSliceItem;
   event: TextEditEvent;
   propertyName: BoxPropertyName;
-  store: Store;
-  sliceName: Slice;
+  store: BoxStore;
+  sliceName: Slice.BorderWidths | Slice.Radii;
 }) => {
   const { event, slice, propertyName, sliceName, store } = params;
   const newName = event.characters || slice.name;

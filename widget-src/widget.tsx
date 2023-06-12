@@ -1,18 +1,27 @@
-import { ActionTypes, Slice, SliceItem } from "./types";
+import {
+  ActionTypes,
+  BoxSliceItem,
+  ColorSliceItem,
+  Slice,
+  Store,
+} from "./types";
 import { RadiiSlices } from "./components/Radii/RadiiSlices";
 import { useInitTheme } from "./hooks/useInitTheme";
 import { BorderWidthSlices } from "./components/BorderWidths/BorderWidthSlices";
 import { downloadTheme } from "./utils/downloadTheme";
+import { ColorSlices } from "./components/Colors/ColorSlices";
 
 const { widget } = figma;
 const { useSyncedMap, AutoLayout, usePropertyMenu, useEffect } = widget;
 
 function Widget() {
-  const radiiMap = useSyncedMap<SliceItem>(Slice.Radii);
-  const borderWidthsMap = useSyncedMap<SliceItem>(Slice.BorderWidths);
-  const store = {
+  const radiiMap = useSyncedMap<BoxSliceItem>(Slice.Radii);
+  const borderWidthsMap = useSyncedMap<BoxSliceItem>(Slice.BorderWidths);
+  const colorsMap = useSyncedMap<ColorSliceItem>(Slice.Colors);
+  const store: Store = {
     [Slice.Radii]: radiiMap,
     [Slice.BorderWidths]: borderWidthsMap,
+    [Slice.Colors]: colorsMap,
   };
 
   useInitTheme(store);
@@ -55,9 +64,21 @@ function Widget() {
         left: 20,
       }}
       verticalAlignItems="center"
+      effect={{
+        type: "drop-shadow",
+        color: "#0003",
+        offset: {
+          x: 4,
+          y: 4,
+        },
+        blur: 30,
+        showShadowBehindNode: false,
+      }}
+      cornerRadius={8}
     >
       <RadiiSlices store={store} />
       <BorderWidthSlices store={store} />
+      <ColorSlices store={store} />
     </AutoLayout>
   );
 }

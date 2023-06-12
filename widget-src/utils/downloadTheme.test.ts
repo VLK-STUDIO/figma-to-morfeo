@@ -13,6 +13,7 @@ describe("downloadTheme", () => {
         "id:a": { id: "id:a", name: "none", value: 0, refIds: [] },
         "id:b": { id: "id:b", name: "XS", value: 3, refIds: [] },
       }),
+      [Slice.Colors]: mockSyncedMap({}),
     });
     expect(figma.showUI).toBeCalled();
     expect(figma.ui.postMessage).toBeCalledWith({

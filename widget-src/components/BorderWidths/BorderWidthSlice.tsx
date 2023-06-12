@@ -1,5 +1,5 @@
 import { BoxPropertyName } from "../../constants";
-import { Slice, SliceItem, Store } from "../../types";
+import { BoxSliceItem, Slice, Store } from "../../types";
 import { deleteSlice } from "../../utils/deleteSlice";
 import { editSliceName } from "../../utils/editSliceName";
 import { editSliceValue } from "../../utils/editSliceValue";
@@ -8,7 +8,7 @@ import { DeleteButton } from "../Buttons/DeleteButton";
 const { widget } = figma;
 const { Frame, Line, Input, AutoLayout } = widget;
 
-interface Props extends SliceItem {
+interface Props extends BoxSliceItem {
   store: Store;
 }
 

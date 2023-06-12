@@ -1,6 +1,8 @@
 import { SliceItem } from "../types";
 
-export const mockSyncedMap = (initialValues?: Record<string, SliceItem>) => {
+export const mockSyncedMap = <T extends SliceItem>(
+  initialValues?: Record<string, T>
+) => {
   const map: Record<string, SliceItem> = { ...initialValues };
 
   const mockSet = jest.fn(
@@ -23,5 +25,5 @@ export const mockSyncedMap = (initialValues?: Record<string, SliceItem>) => {
     values: mockValues,
     length: Object.keys(map).length,
     size: Object.keys(map).length,
-  } as unknown as SyncedMap<SliceItem>;
+  } as unknown as SyncedMap<T>;
 };

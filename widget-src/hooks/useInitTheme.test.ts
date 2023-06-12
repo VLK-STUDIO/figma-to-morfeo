@@ -1,14 +1,15 @@
 import { mockSyncedMap } from "../test-utils/mockSyncedMap";
-import { Slice } from "../types";
+import { BoxSliceItem, Slice } from "../types";
 import { useInitTheme } from "./useInitTheme";
 
 describe("useInitTheme", () => {
   it("should init the theme with default and create BOX if the state is empty and BOX does not exist", () => {
     jest.spyOn(figma.root, "findOne").mockReturnValue(null);
-    const mockState = mockSyncedMap();
+    const mockState = mockSyncedMap<BoxSliceItem>();
     useInitTheme({
       [Slice.Radii]: mockState,
       [Slice.BorderWidths]: mockState,
+      [Slice.Colors]: mockSyncedMap(),
     });
 
     expect(figma.combineAsVariants).toBeCalled();
@@ -42,6 +43,7 @@ describe("useInitTheme", () => {
     useInitTheme({
       [Slice.Radii]: mockState,
       [Slice.BorderWidths]: mockState,
+      [Slice.Colors]: mockSyncedMap(),
     });
     expect(figma.combineAsVariants).not.toBeCalled();
     expect(mockState.set).not.toBeCalled();
@@ -55,10 +57,11 @@ describe("useInitTheme", () => {
         { id: "2", name: "Radius=B", cornerRadius: 20, type: "COMPONENT" },
       ],
     } as unknown as ComponentSetNode);
-    const mockState = mockSyncedMap();
+    const mockState = mockSyncedMap<BoxSliceItem>();
     useInitTheme({
       [Slice.Radii]: mockState,
       [Slice.BorderWidths]: mockState,
+      [Slice.Colors]: mockSyncedMap(),
     });
 
     expect(figma.combineAsVariants).not.toBeCalled();

@@ -2,8 +2,9 @@ import {
   ComponentNames,
   defaultBoxVariants,
   BoxPropertyName,
+  defaultColorSliceItems,
 } from "../constants";
-import { Slice, SliceItem, Store } from "../types";
+import { BoxSliceItem, Slice, Store } from "../types";
 import { createBoxInstances } from "../utils/createBoxInstances";
 import { getCurrentBoxVariants } from "../utils/getCurrentBoxVariants";
 import { getVariantCombinations } from "../utils/getVariantCombinations";
@@ -14,6 +15,7 @@ const { useEffect } = widget;
 export const useInitTheme = ({
   [Slice.Radii]: radiiMap,
   [Slice.BorderWidths]: borderWidthsMap,
+  [Slice.Colors]: colorMap,
 }: Store) => {
   useEffect(() => {
     const boxComponent = figma.root.findOne(
@@ -25,8 +27,8 @@ export const useInitTheme = ({
       return;
     }
 
-    let radiiSliceItems: SliceItem[] = [];
-    let borderWidthsSliceItems: SliceItem[] = [];
+    let radiiSliceItems: BoxSliceItem[] = [];
+    let borderWidthsSliceItems: BoxSliceItem[] = [];
 
     if (!boxComponent) {
       const boxVariants = getVariantCombinations(defaultBoxVariants);
@@ -50,6 +52,10 @@ export const useInitTheme = ({
 
     borderWidthsSliceItems.forEach((sliceItem) => {
       borderWidthsMap.set(sliceItem.id, sliceItem);
+    });
+
+    defaultColorSliceItems.forEach((sliceItem) => {
+      colorMap.set(sliceItem.id, sliceItem);
     });
   });
 };

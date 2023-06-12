@@ -2,7 +2,7 @@ import { BoxPropertyName } from "../constants";
 import { editSliceName } from "./editSliceName";
 import * as Utils from "./utils";
 import * as RestoreBoxComponent from "./restoreBoxComponent";
-import { Slice, Store } from "../types";
+import { BoxSliceItem, Slice } from "../types";
 import { mockSyncedMap } from "../test-utils/mockSyncedMap";
 
 const mockRestoreBoxComponent = jest.fn();
@@ -20,10 +20,10 @@ describe("editSliceName", () => {
     jest
       .spyOn(Utils, "updateVariantName")
       .mockImplementation(mockUpdateVariantName);
-    const stateMap = mockSyncedMap();
-    const store: Store = {
+    const stateMap = mockSyncedMap<BoxSliceItem>();
+    const store = {
       [Slice.Radii]: stateMap,
-      [Slice.BorderWidths]: mockSyncedMap(),
+      [Slice.BorderWidths]: mockSyncedMap<BoxSliceItem>(),
     };
 
     editSliceName({
@@ -62,10 +62,10 @@ describe("editSliceName", () => {
     jest
       .spyOn(Utils, "updateVariantName")
       .mockImplementation(mockUpdateVariantName);
-    const stateMap = mockSyncedMap();
-    const store: Store = {
+    const stateMap = mockSyncedMap<BoxSliceItem>();
+    const store = {
       [Slice.Radii]: stateMap,
-      [Slice.BorderWidths]: mockSyncedMap(),
+      [Slice.BorderWidths]: mockSyncedMap<BoxSliceItem>(),
     };
 
     editSliceName({
@@ -102,10 +102,10 @@ describe("editSliceName", () => {
     jest
       .spyOn(Utils, "updateVariantName")
       .mockImplementation(mockUpdateVariantName);
-    const stateMap = mockSyncedMap();
-    const store: Store = {
+    const stateMap = mockSyncedMap<BoxSliceItem>();
+    const store = {
       [Slice.Radii]: stateMap,
-      [Slice.BorderWidths]: mockSyncedMap(),
+      [Slice.BorderWidths]: mockSyncedMap<BoxSliceItem>(),
     };
 
     editSliceName({
@@ -137,10 +137,10 @@ describe("editSliceName", () => {
     jest
       .spyOn(Utils, "updateVariantName")
       .mockImplementation(mockUpdateVariantName);
-    const stateMap = mockSyncedMap();
-    const store: Store = {
+    const stateMap = mockSyncedMap<BoxSliceItem>();
+    const store = {
       [Slice.Radii]: stateMap,
-      [Slice.BorderWidths]: mockSyncedMap(),
+      [Slice.BorderWidths]: mockSyncedMap<BoxSliceItem>(),
     };
 
     editSliceName({

@@ -1,5 +1,5 @@
 import { mockSyncedMap } from "../test-utils/mockSyncedMap";
-import { Slice, Store } from "../types";
+import { BoxSliceItem, Slice } from "../types";
 import { deleteSlice } from "./deleteSlice";
 import * as RestoreBoxComponent from "./restoreBoxComponent";
 
@@ -11,8 +11,8 @@ jest
 
 describe("deleteSlice", () => {
   it("should call notify and do nothing else if the state is empty", () => {
-    const stateMap = mockSyncedMap();
-    const store: Store = {
+    const stateMap = mockSyncedMap<BoxSliceItem>();
+    const store = {
       [Slice.Radii]: stateMap,
       [Slice.BorderWidths]: stateMap,
     };
@@ -28,7 +28,7 @@ describe("deleteSlice", () => {
       .spyOn(figma, "getNodeById")
       .mockReturnValue({ remove: mockRemove } as any);
 
-    const radiiStateMap = mockSyncedMap({
+    const radiiStateMap = mockSyncedMap<BoxSliceItem>({
       anyId: {
         refIds: ["instance id 1", "instance id 2"],
         id: "anyId",
@@ -36,8 +36,8 @@ describe("deleteSlice", () => {
         value: 1,
       },
     });
-    const borderWidthsStateMap = mockSyncedMap();
-    const store: Store = {
+    const borderWidthsStateMap = mockSyncedMap<BoxSliceItem>();
+    const store = {
       [Slice.Radii]: radiiStateMap,
       [Slice.BorderWidths]: borderWidthsStateMap,
     };
@@ -56,7 +56,7 @@ describe("deleteSlice", () => {
     jest
       .spyOn(figma, "getNodeById")
       .mockReturnValue({ remove: mockRemove } as any);
-    const stateMap = mockSyncedMap({
+    const stateMap = mockSyncedMap<BoxSliceItem>({
       anyId: {
         refIds: [],
         id: "anyId",
@@ -64,7 +64,7 @@ describe("deleteSlice", () => {
         value: 1,
       },
     });
-    const store: Store = {
+    const store = {
       [Slice.Radii]: stateMap,
       [Slice.BorderWidths]: stateMap,
     };
@@ -79,7 +79,7 @@ describe("deleteSlice", () => {
     jest
       .spyOn(figma, "getNodeById")
       .mockReturnValue({ remove: mockRemove } as any);
-    const stateMap = mockSyncedMap({
+    const stateMap = mockSyncedMap<BoxSliceItem>({
       anyId: {
         refIds: [],
         id: "anyId",
@@ -87,7 +87,7 @@ describe("deleteSlice", () => {
         value: 1,
       },
     });
-    const store: Store = {
+    const store = {
       [Slice.Radii]: stateMap,
       [Slice.BorderWidths]: stateMap,
     };
@@ -101,7 +101,7 @@ describe("deleteSlice", () => {
     jest.spyOn(figma.root, "findOne").mockReturnValue({} as any);
     jest.spyOn(figma, "getNodeById").mockReturnValue(null);
 
-    const stateMap = mockSyncedMap({
+    const stateMap = mockSyncedMap<BoxSliceItem>({
       anyId: {
         refIds: ["instance id 1"],
         id: "anyId",
@@ -109,7 +109,7 @@ describe("deleteSlice", () => {
         value: 1,
       },
     });
-    const store: Store = {
+    const store = {
       [Slice.Radii]: stateMap,
       [Slice.BorderWidths]: stateMap,
     };
@@ -125,7 +125,7 @@ describe("deleteSlice", () => {
       .spyOn(figma, "getNodeById")
       .mockReturnValue({ remove: mockRemove } as any);
 
-    const stateMap = mockSyncedMap({
+    const stateMap = mockSyncedMap<BoxSliceItem>({
       anyId: {
         refIds: ["instance id 1"],
         id: "anyId",
@@ -133,7 +133,7 @@ describe("deleteSlice", () => {
         value: 1,
       },
     });
-    const store: Store = {
+    const store = {
       [Slice.Radii]: stateMap,
       [Slice.BorderWidths]: stateMap,
     };

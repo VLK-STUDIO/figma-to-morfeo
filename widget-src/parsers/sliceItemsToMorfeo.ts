@@ -4,7 +4,7 @@ type Slices = Record<Slice, SliceItem[]>;
 
 type MorfeoTheme = Record<Slice, Record<string, string>>;
 
-const simpleParser = (sliceItems: { name: string; value: number }[]) =>
+const simpleParser = <T extends SliceItem>(sliceItems: T[]) =>
   sliceItems.reduce<Record<string, string>>((acc, { name, value }) => {
     if (value === 0) {
       return {
@@ -22,5 +22,6 @@ export const sliceItemsToMorfeo = (slices: Slices): MorfeoTheme => {
   return {
     [Slice.Radii]: simpleParser(slices[Slice.Radii]),
     [Slice.BorderWidths]: simpleParser(slices[Slice.BorderWidths]),
+    [Slice.Colors]: {},
   };
 };
