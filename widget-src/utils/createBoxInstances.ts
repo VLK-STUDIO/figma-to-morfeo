@@ -1,8 +1,8 @@
 import { BoxPropertyName, styleKeyByName } from "../constants";
-import { BoxVariant, SliceItem } from "../types";
+import { BoxSliceItem, BoxVariant } from "../types";
 
 export const createBoxInstances = (variants: BoxVariant[]) => {
-  const sliceItemsMap: Record<BoxPropertyName, Record<string, SliceItem>> = {
+  const sliceItemsMap: Record<BoxPropertyName, Record<string, BoxSliceItem>> = {
     [BoxPropertyName.Radius]: {},
     [BoxPropertyName.BorderWidth]: {},
   };
@@ -38,7 +38,7 @@ export const createBoxInstances = (variants: BoxVariant[]) => {
           ? ({
               ...sliceItemsMap[boxPropertyName]?.[variantName],
               refIds: [...existingRefIds, instance.id],
-            } as SliceItem)
+            } as BoxSliceItem)
           : {
               id: instance.id,
               name: variantName,

@@ -1,13 +1,13 @@
 import { ComponentNames } from "../constants";
-import { SliceItem, BoxStyleKeys, Store, Slice } from "../types";
+import { BoxStyleKeys, Slice, BoxSliceItem, BoxStore } from "../types";
 import { restoreBoxComponent } from "./restoreBoxComponent";
 
 export const editSliceValue = (params: {
-  slice: SliceItem;
+  slice: BoxSliceItem;
   event: TextEditEvent;
   styleKey: BoxStyleKeys;
-  store: Store;
-  sliceName: Slice;
+  store: BoxStore;
+  sliceName: Slice.BorderWidths | Slice.Radii;
 }) => {
   const { event, slice, styleKey, store, sliceName } = params;
   const newValue = Number(event.characters) || slice.value;

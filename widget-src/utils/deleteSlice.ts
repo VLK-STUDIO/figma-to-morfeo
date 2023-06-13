@@ -1,11 +1,11 @@
 import { ComponentNames } from "../constants";
-import { Slice, Store } from "../types";
+import { BoxStore, Slice } from "../types";
 import { restoreBoxComponent } from "./restoreBoxComponent";
 
 export const deleteSlice = (params: {
   id: string;
-  store: Store;
-  sliceName: Slice;
+  store: BoxStore;
+  sliceName: Slice.BorderWidths | Slice.Radii;
 }) => {
   const { id, sliceName, store } = params;
   const stateMap = store[sliceName];

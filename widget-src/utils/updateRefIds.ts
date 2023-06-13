@@ -1,8 +1,8 @@
-import { SliceItem } from "../types";
+import { BoxSliceItem } from "../types";
 
 type Params = {
-  newSliceItems: SliceItem[];
-  stateMap: SyncedMap<SliceItem>;
+  newSliceItems: BoxSliceItem[];
+  stateMap: SyncedMap<BoxSliceItem>;
 };
 
 /**

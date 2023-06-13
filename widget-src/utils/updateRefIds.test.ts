@@ -1,10 +1,10 @@
 import { mockSyncedMap } from "../test-utils/mockSyncedMap";
-import { SliceItem } from "../types";
+import { BoxSliceItem } from "../types";
 import { updateRefIds } from "./updateRefIds";
 
 describe("updateRefIds", () => {
   it("should add refIds saved on newSliceItems to the existing stateMap", () => {
-    const newSliceItems: SliceItem[] = [
+    const newSliceItems: BoxSliceItem[] = [
       { id: "anyId", name: "A", refIds: ["newRef1", "newRef2"], value: 0 },
       { id: "anyId:2", name: "B", refIds: ["newRef3", "newRef4"], value: 1 },
     ];
@@ -41,7 +41,7 @@ describe("updateRefIds", () => {
     });
   });
   it("should not add anything if the name doesn't match", () => {
-    const newSliceItems: SliceItem[] = [
+    const newSliceItems: BoxSliceItem[] = [
       { id: "anyId", name: "A", refIds: ["newRef1", "newRef2"], value: 0 },
       { id: "anyId:2", name: "B", refIds: ["newRef3", "newRef4"], value: 1 },
     ];

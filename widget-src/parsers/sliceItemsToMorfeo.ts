@@ -1,10 +1,14 @@
-import { Slice, SliceItem } from "../types";
+import { BoxSliceItem, ColorSliceItem, Slice } from "../types";
 
-type Slices = Record<Slice, SliceItem[]>;
+type Slices = {
+  [Slice.BorderWidths]: BoxSliceItem[];
+  [Slice.Radii]: BoxSliceItem[];
+  [Slice.Colors]: ColorSliceItem[];
+};
 
 type MorfeoTheme = Record<Slice, Record<string, string>>;
 
-const simpleParser = (sliceItems: { name: string; value: number }[]) =>
+const simpleParser = (sliceItems: BoxSliceItem[]) =>
   sliceItems.reduce<Record<string, string>>((acc, { name, value }) => {
     if (value === 0) {
       return {
@@ -22,5 +26,6 @@ export const sliceItemsToMorfeo = (slices: Slices): MorfeoTheme => {
   return {
     [Slice.Radii]: simpleParser(slices[Slice.Radii]),
     [Slice.BorderWidths]: simpleParser(slices[Slice.BorderWidths]),
+    [Slice.Colors]: {},
   };
 };
