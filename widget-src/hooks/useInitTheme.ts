@@ -4,10 +4,14 @@ import {
   BoxPropertyName,
   defaultColorSliceItems,
 } from "../constants";
-import { BoxSliceItem, Slice, Store } from "../types";
+import { BoxSliceItem, ColorSliceItem, Slice, Store } from "../types";
 import { createBoxInstances } from "../utils/createBoxInstances";
 import { getCurrentBoxVariants } from "../utils/getCurrentBoxVariants";
 import { getVariantCombinations } from "../utils/getVariantCombinations";
+import {
+  getColorStateFromPaintStyles,
+  rgbaToFigmaColor,
+} from "../utils/colorUtils";
 
 const { widget } = figma;
 const { useEffect } = widget;
@@ -29,6 +33,7 @@ export const useInitTheme = ({
 
     let radiiSliceItems: BoxSliceItem[] = [];
     let borderWidthsSliceItems: BoxSliceItem[] = [];
+    let colorSliceItems: ColorSliceItem[] = [];
 
     if (!boxComponent) {
       const boxVariants = getVariantCombinations(defaultBoxVariants);
@@ -46,6 +51,20 @@ export const useInitTheme = ({
       borderWidthsSliceItems = currentVariants[BoxPropertyName.BorderWidth];
     }
 
+    const localPaintStyles = figma.getLocalPaintStyles();
+    const existingColors = getColorStateFromPaintStyles(localPaintStyles);
+    if (existingColors.length > 0) {
+      colorSliceItems = existingColors;
+    } else {
+      colorSliceItems = defaultColorSliceItems.map(({ id, name, rgba }) => {
+        const paintStyle = figma.createPaintStyle();
+        paintStyle.name = name;
+        const { color, opacity } = rgbaToFigmaColor(rgba);
+        paintStyle.paints = [{ type: "SOLID", color, opacity }];
+        return { name, rgba, id, libStyleId: paintStyle.id };
+      });
+    }
+
     radiiSliceItems.forEach((sliceItem) => {
       radiiMap.set(sliceItem.id, sliceItem);
     });
@@ -54,7 +73,7 @@ export const useInitTheme = ({
       borderWidthsMap.set(sliceItem.id, sliceItem);
     });
 
-    defaultColorSliceItems.forEach((sliceItem) => {
+    colorSliceItems.forEach((sliceItem) => {
       colorMap.set(sliceItem.id, sliceItem);
     });
   });

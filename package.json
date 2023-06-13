@@ -15,15 +15,18 @@
     "@figma/plugin-typings": "*",
     "@figma/widget-typings": "*",
     "@types/jest": "^29.5.1",
-    "jest-environment-jsdom": "^29.5.0",
-    "ts-jest": "^29.1.0",
     "esbuild": "*",
     "jest": "^29.5.0",
+    "jest-environment-jsdom": "^29.5.0",
+    "ts-jest": "^29.1.0",
     "typescript": "*"
   },
   "config": {
     "commitizen": {
       "path": "cz-conventional-changelog"
     }
+  },
+  "dependencies": {
+    "polished": "^4.2.2"
   }
 }
