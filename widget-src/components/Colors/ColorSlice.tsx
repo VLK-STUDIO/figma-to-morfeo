@@ -8,11 +8,11 @@ const { widget } = figma;
 const { Frame, Ellipse, Input, AutoLayout, Text } = widget;
 
 interface Props extends ColorSliceItem {
-  store: Store;
+  colorsMap: Store["colors"];
   isHex?: boolean;
 }
 
-export const ColorSlice = ({ isHex, store, ...slice }: Props) => {
+export const ColorSlice = ({ isHex, colorsMap, ...slice }: Props) => {
   const { hex, opacityPercent } = getHexAndOpacity(slice.rgba);
   const { color, opacity } = rgbaToFigmaColor(slice.rgba);
   const fill = { ...color, a: opacity };

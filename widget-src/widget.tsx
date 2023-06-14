@@ -78,7 +78,7 @@ function Widget() {
     >
       <RadiiSlices store={store} />
       <BorderWidthSlices store={store} />
-      <ColorSlices store={store} />
+      <ColorSlices colorsMap={colorsMap} />
     </AutoLayout>
   );
 }

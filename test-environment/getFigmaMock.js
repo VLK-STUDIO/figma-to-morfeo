@@ -39,7 +39,9 @@ module.exports.getFigmaMock = (jestFn) => {
         figmaUiOnHandlers.push([eventName, handler]);
       }),
       off: jestFn((eventName, handler) => {
-        const indexOf = figmaUiOnHandlers.findIndex((entry) => entry[0] === eventName && entry[1] === handler);
+        const indexOf = figmaUiOnHandlers.findIndex(
+          (entry) => entry[0] === eventName && entry[1] === handler
+        );
         if (indexOf > -1) {
           figmaUiOnHandlers.splice(indexOf, 1);
         }
@@ -57,6 +59,7 @@ module.exports.getFigmaMock = (jestFn) => {
     getLocalPaintStyles: jestFn(() => []),
     getLocalTextStyles: jestFn(() => []),
     getLocalEffectStyles: jestFn(() => []),
+    getStyleById: jestFn(() => []),
     loadFontAsync: jestFn(() => Promise.resolve()),
     createTextStyle: jestFn(() => ({ id: randomId() })),
     createPaintStyle: jestFn(() => ({ id: randomId() })),
@@ -64,13 +67,15 @@ module.exports.getFigmaMock = (jestFn) => {
     importStyleByKeyAsync: jestFn(() => Promise.reject()),
     getNodeById: jestFn(() => null),
     createImage: jestFn(() => ({})),
-    createComponent: jestFn(() => getNodeWithDefaults(jestFn, 'COMPONENT')),
-    createPage: jestFn(() => getNodeWithDefaults(jestFn, 'PAGE')),
-    createRectangle: jestFn(() => getNodeWithDefaults(jestFn, 'RECTANGLE')),
-    createFrame: jestFn(() => getNodeWithDefaults(jestFn, 'FRAME')),
-    createLine: jestFn(() => getNodeWithDefaults(jestFn, 'LINE')),
-    createText: jestFn(() => getNodeWithDefaults(jestFn, 'TEXT')),
-    combineAsVariants: jestFn(() => getNodeWithDefaults(jestFn, 'COMPONENT_SET')),
+    createComponent: jestFn(() => getNodeWithDefaults(jestFn, "COMPONENT")),
+    createPage: jestFn(() => getNodeWithDefaults(jestFn, "PAGE")),
+    createRectangle: jestFn(() => getNodeWithDefaults(jestFn, "RECTANGLE")),
+    createFrame: jestFn(() => getNodeWithDefaults(jestFn, "FRAME")),
+    createLine: jestFn(() => getNodeWithDefaults(jestFn, "LINE")),
+    createText: jestFn(() => getNodeWithDefaults(jestFn, "TEXT")),
+    combineAsVariants: jestFn(() =>
+      getNodeWithDefaults(jestFn, "COMPONENT_SET")
+    ),
     closePlugin: jestFn(),
   };
 };

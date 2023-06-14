@@ -1,16 +1,18 @@
-import { Slice, Store } from "../../types";
+import { Store } from "../../types";
 import { AddButton } from "../Buttons/AddButton";
 import { ColorSlice } from "./ColorSlice";
 import { HexToggle } from "./HexToggle";
+import { addColorSlice } from "../../utils/addColorSlice";
 const { widget } = figma;
 const { Text, AutoLayout, useSyncedState } = widget;
 
 type Props = {
-  store: Store;
+  colorsMap: Store["colors"];
 };
 
-export const ColorSlices = ({ store }: Props) => {
+export const ColorSlices = ({ colorsMap }: Props) => {
   const [isHex, setIsHex] = useSyncedState("isHex", true);
+  const add = () => addColorSlice(colorsMap);
   return (
     <AutoLayout
       name="Color frame"
@@ -39,7 +41,7 @@ export const ColorSlices = ({ store }: Props) => {
           >
             Colors
           </Text>
-          <AddButton onClick={() => {}} />
+          <AddButton onClick={add} />
         </AutoLayout>
         <HexToggle isHex={isHex} setIsHex={setIsHex} />
       </AutoLayout>
@@ -51,8 +53,8 @@ export const ColorSlices = ({ store }: Props) => {
         direction="horizontal"
         verticalAlignItems="center"
       >
-        {store[Slice.Colors].values().map((color) => (
-          <ColorSlice isHex={isHex} {...color} store={store} />
+        {colorsMap.values().map((color) => (
+          <ColorSlice isHex={isHex} {...color} colorsMap={colorsMap} />
         ))}
       </AutoLayout>
     </AutoLayout>
