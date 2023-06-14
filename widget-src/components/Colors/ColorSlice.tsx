@@ -1,5 +1,8 @@
+import { rgbaToFigmaColor } from "../../utils/colorUtils";
 import { ColorSliceItem, Store } from "../../types";
 import { DeleteButton } from "../Buttons/DeleteButton";
+import { getHexAndOpacity } from "../../utils/getHexAndOpacity";
+import { ColorValue } from "./ColorValue";
 
 const { widget } = figma;
 const { Frame, Ellipse, Input, AutoLayout, Text } = widget;
@@ -9,15 +12,10 @@ interface Props extends ColorSliceItem {
   isHex?: boolean;
 }
 
-const rgbaToBaseOne = (rgba: RGBA) => ({
-  r: rgba.r / 255,
-  g: rgba.g / 255,
-  b: rgba.b / 255,
-  a: rgba.a,
-});
-
 export const ColorSlice = ({ isHex, store, ...slice }: Props) => {
-  const hexValue = "000";
+  const { hex, opacityPercent } = getHexAndOpacity(slice.rgba);
+  const { color, opacity } = rgbaToFigmaColor(slice.rgba);
+  const fill = { ...color, a: opacity };
   return (
     <AutoLayout
       name="Color Slice"
@@ -30,7 +28,7 @@ export const ColorSlice = ({ isHex, store, ...slice }: Props) => {
     >
       <Frame width={41} height={41}>
         <Frame name="Frame3" overflow="visible" width={41} height={41}>
-          <Ellipse width={41} height={41} fill={rgbaToBaseOne(slice.rgba)} />
+          <Ellipse width={41} height={41} fill={fill} />
         </Frame>
         <DeleteButton onClick={() => {}} />
       </Frame>
@@ -50,127 +48,75 @@ export const ColorSlice = ({ isHex, store, ...slice }: Props) => {
         />
         {isHex ? (
           <AutoLayout
-            name="Group11"
-            strokeWidth={0}
-            overflow="visible"
-            width={50}
-            height={12}
+            direction="vertical"
+            width={100}
+            height={35}
+            spacing={2}
+            verticalAlignItems="center"
           >
-            <Text
-              name="#"
-              fill="#000"
-              fontFamily="Inter"
-              fontSize={10}
-              fontWeight={500}
-            >
-              #
-            </Text>
-            <Input
-              width="fill-parent"
-              name="Hex color value"
-              fill="#000"
-              fontFamily="Inter"
-              fontSize={10}
-              fontWeight={500}
-              strokeWidth={0.632}
-              value={hexValue}
-              onTextEditEnd={() => {}}
-            />
+            <Frame width={100} height={10}>
+              <Text
+                name="#"
+                fill="#000"
+                fontFamily="Inter"
+                fontSize={10}
+                fontWeight={500}
+              >
+                #
+              </Text>
+              <Input
+                x={10}
+                width={60}
+                name="Hex color value"
+                fill="#000"
+                fontFamily="Inter"
+                fontSize={10}
+                fontWeight={500}
+                strokeWidth={0.632}
+                value={hex}
+                onTextEditEnd={() => {}}
+              />
+            </Frame>
+            <AutoLayout width="fill-parent" height={20}>
+              <Text
+                name="opacity"
+                fill="#000"
+                fontFamily="Inter"
+                fontSize={10}
+                fontWeight={500}
+              >
+                opacity:
+              </Text>
+              <Input
+                paragraphIndent={3}
+                width={22}
+                name="Hex color value"
+                fill="#000"
+                fontFamily="Inter"
+                fontSize={10}
+                fontWeight={500}
+                strokeWidth={0.632}
+                value={opacityPercent}
+                onTextEditEnd={() => {}}
+              />
+              <Text
+                name="opacity"
+                fill="#000"
+                fontFamily="Inter"
+                fontSize={10}
+                fontWeight={500}
+                width="fill-parent"
+              >
+                %
+              </Text>
+            </AutoLayout>
           </AutoLayout>
         ) : (
           <AutoLayout direction="vertical" width={50} height={50} spacing={2}>
-            <Frame width="fill-parent" height="fill-parent">
-              <Text
-                name="#"
-                fill="#000"
-                fontFamily="Inter"
-                fontSize={10}
-                fontWeight={500}
-              >
-                R
-              </Text>
-              <Input
-                x={10}
-                width={25}
-                name="Red color value"
-                fill="#000"
-                fontFamily="Inter"
-                fontSize={10}
-                fontWeight={500}
-                strokeWidth={0.632}
-                value={`${slice.rgba?.r}`}
-                onTextEditEnd={() => {}}
-              />
-            </Frame>
-            <Frame width="fill-parent" height="fill-parent">
-              <Text
-                name="#"
-                fill="#000"
-                fontFamily="Inter"
-                fontSize={10}
-                fontWeight={500}
-              >
-                G
-              </Text>
-              <Input
-                x={10}
-                width={25}
-                name="Green color value"
-                fill="#000"
-                fontFamily="Inter"
-                fontSize={10}
-                fontWeight={500}
-                strokeWidth={0.632}
-                value={`${slice.rgba?.g}`}
-                onTextEditEnd={() => {}}
-              />
-            </Frame>
-            <Frame width="fill-parent" height="fill-parent">
-              <Text
-                name="#"
-                fill="#000"
-                fontFamily="Inter"
-                fontSize={10}
-                fontWeight={500}
-              >
-                B
-              </Text>
-              <Input
-                x={10}
-                width={25}
-                name="Blue color value"
-                fill="#000"
-                fontFamily="Inter"
-                fontSize={10}
-                fontWeight={500}
-                strokeWidth={0.632}
-                value={`${slice.rgba?.b}`}
-                onTextEditEnd={() => {}}
-              />
-            </Frame>
-            <Frame width="fill-parent" height="fill-parent">
-              <Text
-                name="#"
-                fill="#000"
-                fontFamily="Inter"
-                fontSize={10}
-                fontWeight={500}
-              >
-                A
-              </Text>
-              <Input
-                x={10}
-                width={25}
-                name="Alpha color value"
-                fill="#000"
-                fontFamily="Inter"
-                fontSize={10}
-                fontWeight={500}
-                strokeWidth={0.632}
-                value={`${slice.rgba?.a}`}
-                onTextEditEnd={() => {}}
-              />
-            </Frame>
+            <ColorValue label="R" value={slice.rgba.r} />
+            <ColorValue label="G" value={slice.rgba.g} />
+            <ColorValue label="B" value={slice.rgba.b} />
+            <ColorValue label="A" value={slice.rgba.a} />
           </AutoLayout>
         )}
       </AutoLayout>
