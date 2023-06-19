@@ -13,7 +13,20 @@ describe("downloadTheme", () => {
         "id:a": { id: "id:a", name: "none", value: 0, refIds: [] },
         "id:b": { id: "id:b", name: "XS", value: 3, refIds: [] },
       }),
-      [Slice.Colors]: mockSyncedMap({}),
+      [Slice.Colors]: mockSyncedMap({
+        "id:x": {
+          id: "id:x",
+          name: "primary",
+          rgba: { r: 34, g: 135, b: 50, a: 1 },
+          libStyleId: "",
+        },
+        "id:y": {
+          id: "id:y",
+          name: "secondary",
+          rgba: { r: 186, g: 165, b: 53, a: 0.5 },
+          libStyleId: "",
+        },
+      }),
     });
     expect(figma.showUI).toBeCalled();
     expect(figma.ui.postMessage).toBeCalledWith({
@@ -26,6 +39,10 @@ describe("downloadTheme", () => {
         [Slice.Radii]: {
           none: "0",
           XS: "3px",
+        },
+        [Slice.Colors]: {
+          primary: "#228732",
+          secondary: "rgba(186,165,53,0.5)",
         },
       }),
     });
