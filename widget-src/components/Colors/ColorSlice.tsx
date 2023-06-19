@@ -3,6 +3,8 @@ import { ColorSliceItem, Store } from "../../types";
 import { DeleteButton } from "../Buttons/DeleteButton";
 import { getHexAndOpacity } from "../../utils/getHexAndOpacity";
 import { ColorValue } from "./ColorValue";
+import { deleteColor } from "./deleteColor";
+import { editColor } from "./editColor";
 
 const { widget } = figma;
 const { Frame, Ellipse, Input, AutoLayout, Text } = widget;
@@ -16,6 +18,7 @@ export const ColorSlice = ({ isHex, colorsMap, ...slice }: Props) => {
   const { hex, opacityPercent } = getHexAndOpacity(slice.rgba);
   const { color, opacity } = rgbaToFigmaColor(slice.rgba);
   const fill = { ...color, a: opacity };
+
   return (
     <AutoLayout
       name="Color Slice"
@@ -30,7 +33,7 @@ export const ColorSlice = ({ isHex, colorsMap, ...slice }: Props) => {
         <Frame name="Frame3" overflow="visible" width={41} height={41}>
           <Ellipse width={41} height={41} fill={fill} />
         </Frame>
-        <DeleteButton onClick={() => {}} />
+        <DeleteButton onClick={() => deleteColor(slice, colorsMap)} />
       </Frame>
       <AutoLayout direction="vertical" spacing={2}>
         <Input
@@ -44,7 +47,9 @@ export const ColorSlice = ({ isHex, colorsMap, ...slice }: Props) => {
           width={90}
           inputBehavior="truncate"
           inputFrameProps={{ direction: "horizontal" }}
-          onTextEditEnd={() => {}}
+          onTextEditEnd={(event) =>
+            editColor({ valueToEdit: "name", event, colorsMap, slice })
+          }
         />
         {isHex ? (
           <AutoLayout
@@ -74,7 +79,9 @@ export const ColorSlice = ({ isHex, colorsMap, ...slice }: Props) => {
                 fontWeight={500}
                 strokeWidth={0.632}
                 value={hex}
-                onTextEditEnd={() => {}}
+                onTextEditEnd={(event) =>
+                  editColor({ valueToEdit: "hex", event, colorsMap, slice })
+                }
               />
             </Frame>
             <AutoLayout width="fill-parent" height={20}>
@@ -97,7 +104,9 @@ export const ColorSlice = ({ isHex, colorsMap, ...slice }: Props) => {
                 fontWeight={500}
                 strokeWidth={0.632}
                 value={opacityPercent}
-                onTextEditEnd={() => {}}
+                onTextEditEnd={(event) =>
+                  editColor({ valueToEdit: "opacity", event, colorsMap, slice })
+                }
               />
               <Text
                 name="opacity"
@@ -113,10 +122,30 @@ export const ColorSlice = ({ isHex, colorsMap, ...slice }: Props) => {
           </AutoLayout>
         ) : (
           <AutoLayout direction="vertical" width={50} height={50} spacing={2}>
-            <ColorValue label="R" value={slice.rgba.r} />
-            <ColorValue label="G" value={slice.rgba.g} />
-            <ColorValue label="B" value={slice.rgba.b} />
-            <ColorValue label="A" value={slice.rgba.a} />
+            <ColorValue
+              rgbaKey="r"
+              value={slice.rgba.r}
+              colorsMap={colorsMap}
+              slice={slice}
+            />
+            <ColorValue
+              rgbaKey="g"
+              value={slice.rgba.g}
+              colorsMap={colorsMap}
+              slice={slice}
+            />
+            <ColorValue
+              rgbaKey="b"
+              value={slice.rgba.b}
+              colorsMap={colorsMap}
+              slice={slice}
+            />
+            <ColorValue
+              rgbaKey="a"
+              value={slice.rgba.a}
+              colorsMap={colorsMap}
+              slice={slice}
+            />
           </AutoLayout>
         )}
       </AutoLayout>

@@ -59,7 +59,7 @@ module.exports.getFigmaMock = (jestFn) => {
     getLocalPaintStyles: jestFn(() => []),
     getLocalTextStyles: jestFn(() => []),
     getLocalEffectStyles: jestFn(() => []),
-    getStyleById: jestFn(() => []),
+    getStyleById: jestFn(() => {}),
     loadFontAsync: jestFn(() => Promise.resolve()),
     createTextStyle: jestFn(() => ({ id: randomId() })),
     createPaintStyle: jestFn(() => ({ id: randomId() })),
