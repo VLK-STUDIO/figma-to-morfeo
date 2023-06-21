@@ -1,11 +1,16 @@
 const { widget } = figma;
-const { Frame, SVG } = widget;
+const { AutoLayout, SVG } = widget;
 
-export function DeleteButton(props: { onClick: () => void }) {
+type Props = {
+  width?: number;
+  height?: number;
+} & Omit<FrameProps, "width" | "height">;
+
+export function DeleteButton({ width = 41, height = 41, ...props }: Props) {
   return (
-    <Frame
-      width={41}
-      height={41}
+    <AutoLayout
+      width={width}
+      height={height}
       name="DeleteButton"
       opacity={0}
       hoverStyle={{ opacity: 1 }}
@@ -15,11 +20,11 @@ export function DeleteButton(props: { onClick: () => void }) {
         visible: true,
       }}
       tooltip="Delete this variant and all related component instances"
+      horizontalAlignItems="center"
+      verticalAlignItems="center"
       {...props}
     >
       <SVG
-        x={10}
-        y={10}
         src={`
           <svg width="20" height="20" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M7 10V15" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -30,6 +35,6 @@ export function DeleteButton(props: { onClick: () => void }) {
           </svg>
           `}
       />
-    </Frame>
+    </AutoLayout>
   );
 }

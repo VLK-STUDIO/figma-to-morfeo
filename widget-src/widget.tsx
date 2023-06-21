@@ -2,14 +2,18 @@ import {
   ActionTypes,
   BoxSliceItem,
   ColorSliceItem,
+  FontSliceItem,
   Slice,
   Store,
+  TextStyleSliceItem,
 } from "./types";
 import { RadiiSlices } from "./components/Radii/RadiiSlices";
 import { useInitTheme } from "./hooks/useInitTheme";
 import { BorderWidthSlices } from "./components/BorderWidths/BorderWidthSlices";
 import { downloadTheme } from "./utils/downloadTheme";
 import { ColorSlices } from "./components/Colors/ColorSlices";
+import { FontSizeSlices } from "./components/FontSizes/FontSizeSlices";
+import { TextStyleSlices } from "./components/TextStyles/TextStyleSlices";
 
 const { widget } = figma;
 const { useSyncedMap, AutoLayout, usePropertyMenu, useEffect } = widget;
@@ -18,10 +22,14 @@ function Widget() {
   const radiiMap = useSyncedMap<BoxSliceItem>(Slice.Radii);
   const borderWidthsMap = useSyncedMap<BoxSliceItem>(Slice.BorderWidths);
   const colorsMap = useSyncedMap<ColorSliceItem>(Slice.Colors);
+  const fontSizesMap = useSyncedMap<FontSliceItem>(Slice.FontSizes);
+  const textStylesMap = useSyncedMap<TextStyleSliceItem>(Slice.TextStyles);
   const store: Store = {
     [Slice.Radii]: radiiMap,
     [Slice.BorderWidths]: borderWidthsMap,
     [Slice.Colors]: colorsMap,
+    [Slice.FontSizes]: fontSizesMap,
+    [Slice.TextStyles]: textStylesMap,
   };
 
   useInitTheme(store);
@@ -79,6 +87,9 @@ function Widget() {
       <RadiiSlices store={store} />
       <BorderWidthSlices store={store} />
       <ColorSlices colorsMap={colorsMap} />
+      <FontSizeSlices store={store} />
+      <TextStyleSlices store={store} />
+      <AutoLayout height={100} />
     </AutoLayout>
   );
 }

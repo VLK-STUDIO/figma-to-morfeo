@@ -3,6 +3,8 @@ import {
   defaultBoxVariants,
   BoxPropertyName,
   defaultColorSliceItems,
+  defaultFontSizeSliceItems,
+  defaultTextStylesSliceItems,
 } from "../constants";
 import { BoxSliceItem, ColorSliceItem, Slice, Store } from "../types";
 import { createBoxInstances } from "../utils/createBoxInstances";
@@ -20,6 +22,8 @@ export const useInitTheme = ({
   [Slice.Radii]: radiiMap,
   [Slice.BorderWidths]: borderWidthsMap,
   [Slice.Colors]: colorMap,
+  [Slice.FontSizes]: fontSizesMap,
+  [Slice.TextStyles]: textStylesMap,
 }: Store) => {
   useEffect(() => {
     const boxComponent = figma.root.findOne(
@@ -75,6 +79,14 @@ export const useInitTheme = ({
 
     colorSliceItems.forEach((sliceItem) => {
       colorMap.set(sliceItem.id, sliceItem);
+    });
+
+    defaultFontSizeSliceItems.forEach((sliceItem) => {
+      fontSizesMap.set(sliceItem.id, sliceItem);
+    });
+
+    defaultTextStylesSliceItems.forEach((sliceItem) => {
+      textStylesMap.set(sliceItem.id, sliceItem);
     });
   });
 };

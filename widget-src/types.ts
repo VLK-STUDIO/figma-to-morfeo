@@ -15,7 +15,19 @@ export interface ColorSliceItem extends BaseSliceItem {
   libStyleId: string;
 }
 
-export type SliceItem = BoxSliceItem | ColorSliceItem;
+export interface FontSliceItem extends BaseSliceItem {
+  value: number;
+}
+
+export interface TextStyleSliceItem extends BaseSliceItem {
+  fontSizeId: string;
+}
+
+export type SliceItem =
+  | BoxSliceItem
+  | ColorSliceItem
+  | FontSliceItem
+  | TextStyleSliceItem;
 
 export type BoxStyleKeys = keyof Pick<
   ComponentNode,
@@ -32,15 +44,21 @@ export enum Slice {
   Radii = "radii",
   BorderWidths = "borderWidths",
   Colors = "colors",
+  FontSizes = "fontSizes",
+  TextStyles = "textStyles",
 }
+
+export type MorfeoSlice = Exclude<Slice, Slice.TextStyles>;
 
 export type Store = {
   [Slice.BorderWidths]: SyncedMap<BoxSliceItem>;
   [Slice.Radii]: SyncedMap<BoxSliceItem>;
   [Slice.Colors]: SyncedMap<ColorSliceItem>;
+  [Slice.FontSizes]: SyncedMap<FontSliceItem>;
+  [Slice.TextStyles]: SyncedMap<TextStyleSliceItem>;
 };
 
-export type BoxStore = Omit<Store, Slice.Colors>;
+export type BoxStore = Pick<Store, Slice.Radii | Slice.BorderWidths>;
 
 export enum ActionTypes {
   downloadTheme = "download-theme",

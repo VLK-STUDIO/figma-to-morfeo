@@ -25,7 +25,6 @@ describe("addRadiiSlice", () => {
     addRadiiSlice({
       [Slice.Radii]: mockRadiiMap,
       [Slice.BorderWidths]: mockBorderWidthsMap,
-      [Slice.Colors]: mockSyncedMap(),
     });
 
     expect(mockRadiiMap.set).toBeCalledWith(expect.any(String), {
@@ -86,7 +85,6 @@ describe("addRadiiSlice", () => {
     addRadiiSlice({
       [Slice.Radii]: mockRadiiMap,
       [Slice.BorderWidths]: mockBorderWidthsMap,
-      [Slice.Colors]: mockSyncedMap(),
     });
 
     expect(mockAppendChild).not.toBeCalled();

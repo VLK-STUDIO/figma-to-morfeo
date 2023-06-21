@@ -1,12 +1,12 @@
 import { BoxPropertyName, ComponentNames } from "../../constants";
-import { Slice, Store } from "../../types";
+import { BoxStore, Slice } from "../../types";
 import { createBoxInstances } from "../../utils/createBoxInstances";
 import { getBoxVariantsFromState } from "../../utils/getBoxVariantsFromState";
 import { getVariantCombinations } from "../../utils/getVariantCombinations";
 import { restoreBoxComponent } from "../../utils/restoreBoxComponent";
 import { updateRefIds } from "../../utils/updateRefIds";
 
-export const addRadiiSlice = (store: Store) => {
+export const addRadiiSlice = (store: BoxStore) => {
   const { [Slice.Radii]: radiiMap, [Slice.BorderWidths]: borderWidthsMap } =
     store;
   const boxComponent = figma.root.findOne(

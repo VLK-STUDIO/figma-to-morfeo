@@ -27,6 +27,8 @@ describe("downloadTheme", () => {
           libStyleId: "",
         },
       }),
+      [Slice.FontSizes]: mockSyncedMap(),
+      [Slice.TextStyles]: mockSyncedMap(),
     });
     expect(figma.showUI).toBeCalled();
     expect(figma.ui.postMessage).toBeCalledWith({

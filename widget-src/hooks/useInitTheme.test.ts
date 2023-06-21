@@ -11,6 +11,8 @@ describe("useInitTheme", () => {
       [Slice.Radii]: mockState,
       [Slice.BorderWidths]: mockState,
       [Slice.Colors]: mockSyncedMap(),
+      [Slice.FontSizes]: mockSyncedMap(),
+      [Slice.TextStyles]: mockSyncedMap(),
     });
 
     expect(figma.combineAsVariants).toBeCalled();
@@ -45,6 +47,8 @@ describe("useInitTheme", () => {
       [Slice.Radii]: mockState,
       [Slice.BorderWidths]: mockState,
       [Slice.Colors]: mockSyncedMap(),
+      [Slice.FontSizes]: mockSyncedMap(),
+      [Slice.TextStyles]: mockSyncedMap(),
     });
     expect(figma.combineAsVariants).not.toBeCalled();
     expect(mockState.set).not.toBeCalled();
@@ -63,6 +67,8 @@ describe("useInitTheme", () => {
       [Slice.Radii]: mockState,
       [Slice.BorderWidths]: mockState,
       [Slice.Colors]: mockSyncedMap(),
+      [Slice.FontSizes]: mockSyncedMap(),
+      [Slice.TextStyles]: mockSyncedMap(),
     });
 
     expect(figma.combineAsVariants).not.toBeCalled();
@@ -86,6 +92,8 @@ describe("useInitTheme", () => {
       [Slice.Radii]: mockSyncedMap(),
       [Slice.BorderWidths]: mockSyncedMap(),
       [Slice.Colors]: mockColorsState,
+      [Slice.FontSizes]: mockSyncedMap(),
+      [Slice.TextStyles]: mockSyncedMap(),
     });
     expect(mockColorsState.set).toBeCalledWith(defaultColorSliceItems[0].id, {
       ...defaultColorSliceItems[0],
@@ -113,6 +121,8 @@ describe("useInitTheme", () => {
       [Slice.Radii]: mockSyncedMap(),
       [Slice.BorderWidths]: mockSyncedMap(),
       [Slice.Colors]: mockColorsState,
+      [Slice.FontSizes]: mockSyncedMap(),
+      [Slice.TextStyles]: mockSyncedMap(),
     });
     expect(mockColorsState.set).toBeCalledWith("paint-1", {
       id: expect.any(String),

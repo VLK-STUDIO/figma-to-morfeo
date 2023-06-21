@@ -1,4 +1,9 @@
-import { BoxStyleKeys, ColorSliceItem } from "./types";
+import {
+  BoxStyleKeys,
+  ColorSliceItem,
+  FontSliceItem,
+  TextStyleSliceItem,
+} from "./types";
 import { GetVariantsParams } from "./utils/getVariantCombinations";
 
 export enum BoxPropertyName {
@@ -37,6 +42,42 @@ export const defaultColorSliceItems: ColorSliceItem[] = [
   },
 ];
 
+export const defaultFontSizeSliceItems: FontSliceItem[] = [
+  {
+    id: "A",
+    name: "XS",
+    value: 10,
+  },
+  {
+    id: "B",
+    name: "S",
+    value: 12,
+  },
+  {
+    id: "C",
+    name: "M",
+    value: 16,
+  },
+  {
+    id: "D",
+    name: "XXL",
+    value: 80,
+  },
+];
+
+export const defaultTextStylesSliceItems: TextStyleSliceItem[] = [
+  {
+    id: "#",
+    name: "h1",
+    fontSizeId: "A",
+  },
+];
+
 export enum ComponentNames {
   Box = "BOX",
+}
+
+export enum StateKeys {
+  IsHex = "isHex",
+  IsDropdownVisible = "isDropdownVisible",
 }
