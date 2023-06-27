@@ -4,7 +4,6 @@ import { ActionTypes, Slice, Store } from "../types";
 export const downloadTheme = (store: Store) => {
   const slices = {
     [Slice.Radii]: store.radii.values(),
-    [Slice.BorderWidths]: store.borderWidths.values(),
     [Slice.Colors]: store.colors.values(),
   };
 
