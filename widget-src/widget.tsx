@@ -4,23 +4,36 @@ import {
   RadiiSliceItem,
   Slice,
   Store,
+  MorfeoCollection,
 } from "./types";
 import { RadiiSlices } from "./components/Radii/RadiiSlices";
 import { useInitTheme } from "./hooks/useInitTheme";
 import { downloadTheme } from "./utils/downloadTheme";
 import { ColorSlices } from "./components/Colors/ColorSlices";
+import { MORFEO_COLLECTION_NAME } from "./constants";
+import { useInitCollection } from "./hooks/useInitCollection";
 
 const { widget } = figma;
-const { useSyncedMap, AutoLayout, usePropertyMenu, useEffect } = widget;
+const { useSyncedMap, AutoLayout, usePropertyMenu, useEffect, useSyncedState } =
+  widget;
 
 function Widget() {
   const radiiMap = useSyncedMap<RadiiSliceItem>(Slice.Radii);
   const colorsMap = useSyncedMap<ColorSliceItem>(Slice.Colors);
+  const [morfeoCollection, setMorfeoCollection] =
+    useSyncedState<MorfeoCollection>(MORFEO_COLLECTION_NAME, {
+      name: MORFEO_COLLECTION_NAME,
+      id: "",
+      defaultModeId: "",
+    });
+
   const store: Store = {
     [Slice.Radii]: radiiMap,
     [Slice.Colors]: colorsMap,
+    morfeoCollection,
   };
 
+  useInitCollection(morfeoCollection, setMorfeoCollection);
   useInitTheme(store);
 
   useEffect(() => {

@@ -15,6 +15,10 @@ export const defaultColorSliceItems: ColorSliceItem[] = [
   },
 ];
 
-export enum ComponentNames {
-  Box = "BOX",
-}
+export const defaultRadiiSliceItems = [
+  { name: "Radius/none", value: 0 },
+  { name: "Radius/XS", value: 5 },
+  { name: "Radius/S", value: 10 },
+];
+
+export const MORFEO_COLLECTION_NAME = "Morfeo tokens";

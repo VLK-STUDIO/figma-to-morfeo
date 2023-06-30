@@ -23,6 +23,7 @@ describe("downloadTheme", () => {
           libStyleId: "",
         },
       }),
+      morfeoCollection: { id: "", defaultModeId: "", name: "" },
     });
     expect(figma.showUI).toBeCalled();
     expect(figma.ui.postMessage).toBeCalledWith({

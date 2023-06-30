@@ -15,6 +15,18 @@ const getNodeWithDefaults = (jestFn, type) => ({
   remove: jestFn(() => {}),
 });
 
+const getVariableBase = (jestFn) => ({
+  id: randomId(),
+  description: "",
+  key: "",
+  remote: false,
+  scopes: [],
+  valuesByMode: {},
+  remove: jestFn(),
+  resolveForConsumer: jestFn(),
+  setValueForMode: jestFn(),
+});
+
 /** @type {(() => void) => {}} */
 module.exports.getFigmaMock = (jestFn) => {
   return {
@@ -24,6 +36,7 @@ module.exports.getFigmaMock = (jestFn) => {
     }),
     currentPage: {
       selection: [],
+      children: [],
     },
     viewport: {
       scrollAndZoomIntoView: jestFn(),
@@ -55,6 +68,29 @@ module.exports.getFigmaMock = (jestFn) => {
     },
     widget: {
       useEffect: jestFn((callback) => callback()),
+    },
+    variables: {
+      createVariable: jestFn((name, collectionId, resolvedType) => ({
+        name,
+        collectionId,
+        resolvedType,
+        ...getVariableBase(jestFn),
+      })),
+      createVariableAlias: jestFn(() => ({
+        id: randomId(),
+        type: "VARIABLE_ALIAS",
+      })),
+      createVariableCollection: jestFn((name) => ({
+        id: randomId(),
+        defaultModeId: randomId(),
+        name,
+      })),
+      getLocalVariableCollections: jestFn(() => []),
+      getLocalVariables: jestFn(() => []),
+      getVariableById: jestFn(() => null),
+      getVariableCollectionById: jestFn(() => null),
+      importVariableByKeyAsync: jestFn(),
+      setBoundVariableForPaint: jestFn(),
     },
     getLocalPaintStyles: jestFn(() => []),
     getLocalTextStyles: jestFn(() => []),
