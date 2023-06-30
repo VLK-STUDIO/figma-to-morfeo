@@ -9,7 +9,6 @@ export interface ColorSliceItem extends BaseSliceItem {
 }
 
 export interface RadiiSliceItem extends BaseSliceItem {
-  libStyleId: string;
   value: number;
 }
 
@@ -19,10 +18,16 @@ export enum Slice {
   Radii = "radii",
   Colors = "colors",
 }
+export interface MorfeoCollection {
+  id: string;
+  name: string;
+  defaultModeId: string;
+}
 
 export type Store = {
   [Slice.Radii]: SyncedMap<RadiiSliceItem>;
   [Slice.Colors]: SyncedMap<ColorSliceItem>;
+  morfeoCollection: MorfeoCollection;
 };
 
 export enum ActionTypes {

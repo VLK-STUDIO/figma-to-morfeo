@@ -9,6 +9,7 @@ interface Props extends RadiiSliceItem {
 }
 
 export const RadiiSlice = ({ store, ...slice }: Props) => {
+  const inputName = slice.name.replace("Radius/", "");
   return (
     <AutoLayout
       name="Radius Slice"
@@ -37,8 +38,8 @@ export const RadiiSlice = ({ store, ...slice }: Props) => {
           fill="#000"
           fontFamily="Inter"
           fontWeight={700}
-          value={slice.name}
-          width={40}
+          value={inputName}
+          width={100}
           inputBehavior="truncate"
           inputFrameProps={{ direction: "horizontal" }}
           onTextEditEnd={() => {}}

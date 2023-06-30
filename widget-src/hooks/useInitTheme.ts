@@ -1,26 +1,70 @@
-import { defaultColorSliceItems } from "../constants";
+import { defaultColorSliceItems, defaultRadiiSliceItems } from "../constants";
 import { RadiiSliceItem, ColorSliceItem, Slice, Store } from "../types";
 import {
   getColorStateFromPaintStyles,
   rgbaToFigmaColor,
 } from "../utils/colorUtils";
+import { getVariablesBySlice } from "../utils/getVariablesBySlice";
 
 const { widget } = figma;
 const { useEffect } = widget;
 
-//TODO: refactor to init radii correctly (using variables)
+const createNewVariable = <T extends VariableValue>({
+  name,
+  collectionId,
+  value,
+  modeId,
+  scope,
+}: {
+  name: string;
+  value: T;
+  collectionId: string;
+  modeId: string;
+  scope: VariableScope;
+}) => {
+  console.log(name);
+
+  const newVar = figma.variables.createVariable(name, collectionId, "FLOAT");
+  newVar.scopes = [scope];
+  newVar.setValueForMode(modeId, value);
+  return {
+    id: newVar.id,
+    name: newVar.name,
+    value,
+  };
+};
 
 export const useInitTheme = ({
   [Slice.Radii]: radiiMap,
   [Slice.Colors]: colorMap,
+  morfeoCollection,
 }: Store) => {
   useEffect(() => {
-    if (radiiMap.size !== 0) {
+    const collection = figma.variables.getVariableCollectionById(
+      morfeoCollection.id
+    );
+    if (radiiMap.size > 0 || !collection) {
       return;
     }
 
     let radiiSliceItems: RadiiSliceItem[] = [];
     let colorSliceItems: ColorSliceItem[] = [];
+
+    const existingVariables = getVariablesBySlice(collection.variableIds);
+
+    if (existingVariables[Slice.Radii]) {
+      radiiSliceItems = existingVariables[Slice.Radii];
+    } else {
+      const { defaultModeId: modeId, id: collectionId } = morfeoCollection;
+      radiiSliceItems = defaultRadiiSliceItems.map((defaultRadiiSliceItem) =>
+        createNewVariable({
+          ...defaultRadiiSliceItem,
+          collectionId,
+          modeId,
+          scope: "CORNER_RADIUS",
+        })
+      );
+    }
 
     const localPaintStyles = figma.getLocalPaintStyles();
     const existingColors = getColorStateFromPaintStyles(localPaintStyles);
