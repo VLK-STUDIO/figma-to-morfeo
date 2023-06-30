@@ -1,13 +1,12 @@
 import {
   ActionTypes,
-  BoxSliceItem,
   ColorSliceItem,
+  RadiiSliceItem,
   Slice,
   Store,
 } from "./types";
 import { RadiiSlices } from "./components/Radii/RadiiSlices";
 import { useInitTheme } from "./hooks/useInitTheme";
-import { BorderWidthSlices } from "./components/BorderWidths/BorderWidthSlices";
 import { downloadTheme } from "./utils/downloadTheme";
 import { ColorSlices } from "./components/Colors/ColorSlices";
 
@@ -15,12 +14,10 @@ const { widget } = figma;
 const { useSyncedMap, AutoLayout, usePropertyMenu, useEffect } = widget;
 
 function Widget() {
-  const radiiMap = useSyncedMap<BoxSliceItem>(Slice.Radii);
-  const borderWidthsMap = useSyncedMap<BoxSliceItem>(Slice.BorderWidths);
+  const radiiMap = useSyncedMap<RadiiSliceItem>(Slice.Radii);
   const colorsMap = useSyncedMap<ColorSliceItem>(Slice.Colors);
   const store: Store = {
     [Slice.Radii]: radiiMap,
-    [Slice.BorderWidths]: borderWidthsMap,
     [Slice.Colors]: colorsMap,
   };
 
@@ -77,7 +74,6 @@ function Widget() {
       cornerRadius={8}
     >
       <RadiiSlices store={store} />
-      <BorderWidthSlices store={store} />
       <ColorSlices colorsMap={colorsMap} />
     </AutoLayout>
   );

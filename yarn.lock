@@ -417,9 +417,9 @@
   integrity sha512-lAhycmKnVOuRYNtRtatQR1LPQf2oYCkRGkSFnseDAKPl8lu5SOsK/e1sXe5a0Pc5kHIHe6P2I/ilntNv2xf3cA==
 
 "@figma/plugin-typings@*":
-  version "1.64.0"
-  resolved "https://registry.yarnpkg.com/@figma/plugin-typings/-/plugin-typings-1.64.0.tgz#521f2399dd6d570f047e323dab2abd27ee6a869d"
-  integrity sha512-oQUqYh790cXBP3x9Ejq0Wyp/AJZzYfjlB3Od8xuljL/lJFUsP+z4BSshB6nipYmQb6iih1+9d1PhgE9qxzuQQg==
+  version "1.68.0"
+  resolved "https://registry.yarnpkg.com/@figma/plugin-typings/-/plugin-typings-1.68.0.tgz#3f1edd60d37473aa1596cd4b300eeb9ee01cdaa2"
+  integrity sha512-hT+iqf5CRRqKI7NmPdwml+Ld/mG1QM8VcZZURV2AowIy6vC3VQ2iIIT5d7ulDnQU+WzQDvaGaDAw/J5X6tQ2Ww==
 
 "@figma/widget-typings@*":
   version "1.5.0"

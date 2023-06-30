@@ -1,15 +1,14 @@
-import { BoxSliceItem, ColorSliceItem, Slice } from "../types";
+import { RadiiSliceItem, ColorSliceItem, Slice } from "../types";
 import { rgbToColorString } from "polished";
 
 type Slices = {
-  [Slice.BorderWidths]: BoxSliceItem[];
-  [Slice.Radii]: BoxSliceItem[];
+  [Slice.Radii]: RadiiSliceItem[];
   [Slice.Colors]: ColorSliceItem[];
 };
 
 type MorfeoTheme = Record<Slice, Record<string, string>>;
 
-const simpleParser = (sliceItems: BoxSliceItem[]) =>
+const simpleParser = (sliceItems: RadiiSliceItem[]) =>
   sliceItems.reduce<Record<string, string>>((acc, { name, value }) => {
     if (value === 0) {
       return {
@@ -40,7 +39,6 @@ const colorParser = (sliceItems: ColorSliceItem[]) =>
 export const sliceItemsToMorfeo = (slices: Slices): MorfeoTheme => {
   return {
     [Slice.Radii]: simpleParser(slices[Slice.Radii]),
-    [Slice.BorderWidths]: simpleParser(slices[Slice.BorderWidths]),
     [Slice.Colors]: colorParser(slices[Slice.Colors]),
   };
 };

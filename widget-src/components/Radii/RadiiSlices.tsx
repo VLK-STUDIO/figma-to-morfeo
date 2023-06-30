@@ -1,7 +1,6 @@
 import { Slice, Store } from "../../types";
 import { AddButton } from "../Buttons/AddButton";
 import { RadiiSlice } from "./RadiiSlice";
-import { addRadiiSlice } from "./utils";
 
 const { widget } = figma;
 const { Text, AutoLayout } = widget;
@@ -38,7 +37,7 @@ export const RadiiSlices = ({ store }: Props) => {
         >
           Radii
         </Text>
-        <AddButton onClick={() => addRadiiSlice(store)} />
+        <AddButton onClick={() => {}} />
       </AutoLayout>
       <AutoLayout
         name="Frame 2"

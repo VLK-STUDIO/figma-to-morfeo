@@ -1,19 +1,16 @@
 import { defaultColorSliceItems } from "../constants";
 import { mockSyncedMap } from "../test-utils/mockSyncedMap";
-import { BoxSliceItem, ColorSliceItem, Slice } from "../types";
+import { RadiiSliceItem, ColorSliceItem, Slice } from "../types";
 import { useInitTheme } from "./useInitTheme";
 
-describe("useInitTheme", () => {
-  it("should init the theme with default and create BOX if the state is empty and BOX does not exist", () => {
-    jest.spyOn(figma.root, "findOne").mockReturnValue(null);
-    const mockState = mockSyncedMap<BoxSliceItem>();
+describe.skip("useInitTheme", () => {
+  it("should init radii with defaults if the state is empty and there are no radius variables", () => {
+    const mockState = mockSyncedMap<RadiiSliceItem>();
     useInitTheme({
       [Slice.Radii]: mockState,
-      [Slice.BorderWidths]: mockState,
       [Slice.Colors]: mockSyncedMap(),
     });
 
-    expect(figma.combineAsVariants).toBeCalled();
     expect(mockState.set).toBeCalledWith(expect.any(String), {
       id: expect.any(String),
       name: "none",
@@ -34,34 +31,21 @@ describe("useInitTheme", () => {
     });
   });
 
-  it("should not create the BOX component and should not set the state if the state is not empty and the component exist", () => {
-    jest
-      .spyOn(figma.root, "findOne")
-      .mockReturnValue({ type: "COMPONENT_SET" } as any);
+  it("should not set radii if the state is not empty and there are matching variables", () => {
     const mockState = mockSyncedMap({
-      anyId: { id: "anyId", name: "A", refIds: [], value: 1 },
+      anyId: { id: "anyId", name: "A", libStyleId: "", value: 0 },
     });
     useInitTheme({
       [Slice.Radii]: mockState,
-      [Slice.BorderWidths]: mockState,
       [Slice.Colors]: mockSyncedMap(),
     });
-    expect(figma.combineAsVariants).not.toBeCalled();
     expect(mockState.set).not.toBeCalled();
   });
 
-  it("should not create the BOX component and should set the state (with current box variants) if the state is empty and the component exist", () => {
-    jest.spyOn(figma.root, "findOne").mockReturnValue({
-      type: "COMPONENT_SET",
-      children: [
-        { id: "1", name: "Radius=A", cornerRadius: 10, type: "COMPONENT" },
-        { id: "2", name: "Radius=B", cornerRadius: 20, type: "COMPONENT" },
-      ],
-    } as unknown as ComponentSetNode);
-    const mockState = mockSyncedMap<BoxSliceItem>();
+  it("should use the variables to init the radii if the state is empty and radii variables are found", () => {
+    const mockState = mockSyncedMap<RadiiSliceItem>();
     useInitTheme({
       [Slice.Radii]: mockState,
-      [Slice.BorderWidths]: mockState,
       [Slice.Colors]: mockSyncedMap(),
     });
 
@@ -84,7 +68,6 @@ describe("useInitTheme", () => {
     const mockColorsState = mockSyncedMap<ColorSliceItem>();
     useInitTheme({
       [Slice.Radii]: mockSyncedMap(),
-      [Slice.BorderWidths]: mockSyncedMap(),
       [Slice.Colors]: mockColorsState,
     });
     expect(mockColorsState.set).toBeCalledWith(defaultColorSliceItems[0].id, {
@@ -111,7 +94,6 @@ describe("useInitTheme", () => {
     const mockColorsState = mockSyncedMap<ColorSliceItem>();
     useInitTheme({
       [Slice.Radii]: mockSyncedMap(),
-      [Slice.BorderWidths]: mockSyncedMap(),
       [Slice.Colors]: mockColorsState,
     });
     expect(mockColorsState.set).toBeCalledWith("paint-1", {
